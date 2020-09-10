@@ -1,0 +1,3 @@
+[submodule "submodules/LinqGarden"]
+	path = submodules/LinqGarden
+	url = https://github.com/ctollerud/LinqGarden.git
