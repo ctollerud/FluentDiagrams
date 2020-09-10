@@ -4,12 +4,15 @@
     <TargetFramework>netstandard1.0</TargetFramework>
     <Authors>Corey Tollerud</Authors>
     <Company />
-    <Description>A library for declaratively constructing images. Loosely inspired by Brent Yorgey's Diagrams library for Haskell.</Description>
+    <Description>A library for declaratively constructing vector graphics. Loosely inspired by Brent Yorgey's Diagrams library for Haskell.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>2020</Copyright>
     <RepositoryUrl>https://github.com/ctollerud/FluentDiagrams</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>0.0.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
