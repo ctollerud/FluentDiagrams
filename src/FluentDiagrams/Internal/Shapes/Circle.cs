@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FluentDiagrams.Primitives
 {
-	internal class CircleDiagram : IDiagram
+	public class CircleDiagram : IDiagram
 	{
 		public Maybe<BoundingBox> Bounds { get; }
 
