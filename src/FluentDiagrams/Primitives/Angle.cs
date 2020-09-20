@@ -24,7 +24,7 @@ namespace FluentDiagrams.Primitives
 		public static Angle FromRadians( decimal radians ) =>
 			radians
 			.Pipe( x => (double)x )
-			.Pipe(x => ( x / ( 2 * Math.PI ) ) )
+			.Pipe( x => x / ( 2 * Math.PI ) )
 			.Pipe( x => (decimal)x )
 			.Pipe( FromRotations );
 
@@ -40,7 +40,7 @@ namespace FluentDiagrams.Primitives
 		public static Angle FromDegrees( decimal v ) =>
 			v
 			.Pipe( x => (double)x )
-			.Pipe( x => ( x / 360 ) )
+			.Pipe( x => x / 360 )
 			.Pipe( x => (decimal)x )
 			.Pipe( Angle.FromRotations );
 	}

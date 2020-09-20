@@ -47,7 +47,7 @@ namespace FluentDiagrams.Svg.Internal
 					from state in State.Get<SvgDrawState>()
 					let definitions = state.m_Definitions
 					let orderingIndex = definitions.Count
-					let cssId = $"{defined.GetType().Name}_{ orderingIndex.ToString()}"
+					let cssId = $"{defined.GetType().Name}_{ orderingIndex}"
 					let elementWithId = element.Add( new XAttribute( "id", cssId ) )
 					let newCollection = definitions.Add( defined, (cssId, definitions.Count, elementWithId.Build()) )
 					from addNewState in State.Put<SvgDrawState>( new SvgDrawState( Converter, newCollection ) )

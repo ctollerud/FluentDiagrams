@@ -50,3 +50,12 @@ csharp_style_var_for_built_in_types = false:none
 
 # IDE0008: Use explicit type
 csharp_style_var_when_type_is_apparent = false:none
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = none
+
+# IDE0046: Convert to conditional expression
+dotnet_style_prefer_conditional_expression_over_return = true:none
+
+# IDE0065: Misplaced using directive
+csharp_using_directive_placement = outside_namespace:none

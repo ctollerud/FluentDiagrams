@@ -69,8 +69,8 @@ namespace FluentDiagrams.Primitives
 
 		public static Coordinate Polar( Angle angle, decimal radius )
 		{
-			decimal x = ( (decimal)radius ) * (decimal)Math.Cos( (double)angle.Radians );
-			decimal y = ( (decimal)radius ) * (decimal)Math.Sin( (double)angle.Radians );
+			decimal x = radius * (decimal)Math.Cos( (double)angle.Radians );
+			decimal y = radius * (decimal)Math.Sin( (double)angle.Radians );
 
 			return new Coordinate( x, y );
 		}

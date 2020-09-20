@@ -13,15 +13,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submodules", "Submodules", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentDiagrams.Svg", "FluentDiagrams.Svg\FluentDiagrams.Svg.csproj", "{C21C449F-8A13-4E96-B13A-58FACD21FA4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentDiagrams.Gallery", "FluentDiagrams.Gallery\FluentDiagrams.Gallery.csproj", "{FA749D93-9B03-46B3-AA6E-FC741B66E4DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentDiagrams.Gallery", "FluentDiagrams.Gallery\FluentDiagrams.Gallery.csproj", "{FA749D93-9B03-46B3-AA6E-FC741B66E4DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentDiagrams.BuildUtils", "FluentDiagrams.BuildUtils\FluentDiagrams.BuildUtils.csproj", "{05AA4264-92C4-4698-BB8D-B9F2604005A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentDiagrams.BuildUtils", "FluentDiagrams.BuildUtils\FluentDiagrams.BuildUtils.csproj", "{05AA4264-92C4-4698-BB8D-B9F2604005A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35910B9F-8A7F-451B-9680-124AF97CC03F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		..\submodules\LinqGarden\src\Directory.Build.props = ..\submodules\LinqGarden\src\Directory.Build.props
 		Directory.build.props = Directory.build.props
+		VersionInfo.props = VersionInfo.props
 	EndProjectSection
 EndProject
 Global

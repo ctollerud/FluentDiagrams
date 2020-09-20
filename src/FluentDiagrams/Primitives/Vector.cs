@@ -18,7 +18,7 @@ namespace FluentDiagrams.Primitives
 		public decimal Dx { get; }
 		public decimal Dy { get; }
 		public decimal Magnitude =>
-			( Dx * Dx + Dy * Dy )
+			( ( Dx * Dx ) + ( Dy * Dy ) )
 			.Pipe( x => (double)x )
 			.Pipe( Math.Sqrt )
 			.Pipe( x => (decimal)x );

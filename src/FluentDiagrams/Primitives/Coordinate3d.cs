@@ -7,7 +7,7 @@ namespace FluentDiagrams.Primitives
 {
 	public class Coordinate3d
 	{
-		public  decimal X { get; }
+		public decimal X { get; }
 		public decimal Y { get; }
 		public decimal Z { get; }
 		public static Coordinate3d Origin { get; } = Coordinate3d.Cartesian( 0, 0, 0 );

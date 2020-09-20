@@ -1,15 +1,34 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../VersionInfo.props"/>
+	
   <PropertyGroup>
     <TargetFramework>netstandard1.0</TargetFramework>
+		<Authors>Corey Tollerud</Authors>
+		<Company />
+		<Description>An SVG Renderer for the FluentDiagrams library.</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Copyright>2020</Copyright>
+		<RepositoryUrl>https://github.com/ctollerud/FluentDiagrams</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<LangVersion>8.0</LangVersion>
   </PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFramework>netstandard1.0</TargetFramework>
+
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+		<!--target the project during development-->
     <ProjectReference Include="..\FluentDiagrams\FluentDiagrams.csproj" />
+		
+		<!--target the nuget package during deployment-->
   </ItemGroup>
 
 </Project>

@@ -9,12 +9,12 @@ namespace FluentDiagrams.Svg.Internal
 {
 	public class XElementBuilder
 	{
-		public ImmutableDictionary<string,XAttribute> Attributes { get; }
+		public ImmutableDictionary<string, XAttribute> Attributes { get; }
 		public ImmutableList<XElement> Elements { get; }
 
 		public XName Name { get; }
 
-		private XElementBuilder( XName elementName, ImmutableDictionary<string,XAttribute> attributes, ImmutableList<XElement> elements )
+		private XElementBuilder( XName elementName, ImmutableDictionary<string, XAttribute> attributes, ImmutableList<XElement> elements )
 		{
 			Name = elementName;
 			Attributes = attributes;
@@ -29,11 +29,11 @@ namespace FluentDiagrams.Svg.Internal
 			Add( attributes.AsEnumerable() );
 
 		public XElementBuilder Add( IEnumerable<XAttribute> attributes ) =>
-			new XElementBuilder( 
-				Name, 
+			new XElementBuilder(
+				Name,
 				Attributes
-					.RemoveRange( attributes.Select(x => x.Name.ToString()) )
-					.AddRange( attributes.ToDictionary(x => x.Name.ToString(), x => x) ),
+					.RemoveRange( attributes.Select( x => x.Name.ToString() ) )
+					.AddRange( attributes.ToDictionary( x => x.Name.ToString(), x => x ) ),
 					Elements );
 
 		public XElementBuilder Add( params XElement[] elements ) =>
