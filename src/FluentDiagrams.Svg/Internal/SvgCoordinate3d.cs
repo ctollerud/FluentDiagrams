@@ -4,7 +4,7 @@
 	{
 		public int X { get; }
 		public int Y { get; }
-		public int Z{ get; }
+		public int Z { get; }
 
 		public SvgCoordinate3d( int x, int y, int z )
 		{

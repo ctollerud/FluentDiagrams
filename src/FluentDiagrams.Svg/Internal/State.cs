@@ -53,9 +53,7 @@ namespace FluentDiagrams.Svg.Internal
 			State<TState,TVal3>.Result NewRunState( TState state )
 			{
 				var firstResult = source.Func( state );
-
 				var middleResult = midValue( firstResult.Value ).Func( firstResult.State );
-
 				var finalResult = resultSelector( firstResult.Value, middleResult.Value );
 
 				return new State<TState, TVal3>.Result( middleResult.State, finalResult );

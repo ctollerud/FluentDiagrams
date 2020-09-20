@@ -5,7 +5,7 @@ namespace FluentDiagrams.Primitives
 {
 	public class Angle
 	{
-		private static readonly decimal TAU = (decimal)( 2 * Math.PI );
+		private const decimal TAU = (decimal)( 2 * Math.PI );
 
 		public decimal Rotations { get; }
 		public decimal Radians => Rotations * TAU;

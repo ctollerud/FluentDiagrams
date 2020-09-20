@@ -2,13 +2,14 @@
 
 	<PropertyGroup>
 		<LangVersion>8.0</LangVersion>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisLevel>latest</AnalysisLevel>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<DefineConstants>TRACE;CONTRACTS_FULL</DefineConstants>
 	</PropertyGroup>
+
 </Project>

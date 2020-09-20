@@ -29,7 +29,6 @@ namespace FluentDiagrams
 			YMin = yMin;
 			YMax = yMax;
 		}
-
 		internal BoundingBox Scale( decimal x, decimal y )
 		{
 			return BoundingBox.Create( Math.Abs( this.Width * x ), Math.Abs( this.Height * y ), Center() );

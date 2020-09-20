@@ -11,8 +11,9 @@ namespace FluentDiagrams.Svg.Internal
 
 	internal class SvgDrawState
 	{
-		public SvgDrawState( CoordinatesConverter converter ) : 
-			this( converter, DefinitionCollection.Empty ) { }
+		public SvgDrawState( CoordinatesConverter converter ) :
+			this( converter, DefinitionCollection.Empty )
+		{ }
 
 		private SvgDrawState( CoordinatesConverter converter, DefinitionCollection definitions )
 		{
@@ -22,18 +23,18 @@ namespace FluentDiagrams.Svg.Internal
 
 		public CoordinatesConverter Converter { get; }
 
-		private ImmutableDictionary<object, (string Id, int Order, XElement DefBody)> m_Definitions;
+		private readonly ImmutableDictionary<object, (string Id, int Order, XElement DefBody)> m_Definitions;
 
 		public IEnumerable<XElement> BuildDeclarations()
 		{
-			yield return 
+			yield return
 				new XElement( "defs",
 					m_Definitions.Values
 					.OrderBy( x => x.Order )
 					.Select( x => x.DefBody ) );
 		}
 
-		private State<SvgDrawState,string> IncludeDefinitionInternal( object defined, State<SvgDrawState, XElementBuilder> definitionFactory )
+		private State<SvgDrawState, string> IncludeDefinitionInternal( object defined, State<SvgDrawState, XElementBuilder> definitionFactory )
 		{
 			if( m_Definitions.TryGetValue( defined, out var values ) )
 			{
@@ -48,7 +49,7 @@ namespace FluentDiagrams.Svg.Internal
 					let orderingIndex = definitions.Count
 					let cssId = $"{defined.GetType().Name}_{ orderingIndex.ToString()}"
 					let elementWithId = element.Add( new XAttribute( "id", cssId ) )
-					let newCollection = definitions.Add( defined, (cssId, definitions.Count, elementWithId.Build() ) )
+					let newCollection = definitions.Add( defined, (cssId, definitions.Count, elementWithId.Build()) )
 					from addNewState in State.Put<SvgDrawState>( new SvgDrawState( Converter, newCollection ) )
 					select cssId;
 			}
