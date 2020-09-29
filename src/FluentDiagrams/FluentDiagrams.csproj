@@ -2,7 +2,7 @@
 	<Import Project="../VersionInfo.props" />
 	
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Corey Tollerud</Authors>
     <Company />
     <Description>A library for declaratively constructing vector graphics. Loosely inspired by Brent Yorgey's Diagrams library for Haskell.</Description>
@@ -13,18 +13,22 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<LangVersion>8.0</LangVersion>
+		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="LinqGarden" Version="0.2.0-alpha.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="System.Collections.Immutable" Version="1.2.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\submodules\LinqGarden\src\LinqGarden\LinqGarden.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Diagrams\" />
+    <Folder Include="Geometry\" />
   </ItemGroup>
 
 </Project>

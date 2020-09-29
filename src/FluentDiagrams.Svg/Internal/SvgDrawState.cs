@@ -34,7 +34,7 @@ namespace FluentDiagrams.Svg.Internal
 					.Select( x => x.DefBody ) );
 		}
 
-		private State<SvgDrawState, string> IncludeDefinitionInternal( object defined, State<SvgDrawState, XElementBuilder> definitionFactory )
+		public State<SvgDrawState, string> IncludeDefinitionInternal( object defined, State<SvgDrawState, XElementBuilder> definitionFactory )
 		{
 			if( m_Definitions.TryGetValue( defined, out var values ) )
 			{

@@ -1,11 +1,12 @@
 ﻿using FluentDiagrams.Primitives;
-using LinqGarden;
-using System;
 
 namespace FluentDiagrams
 {
 	public interface IDiagram
 	{
-		Maybe<BoundingBox> Bounds { get; }
+		BoundingBox Bounds { get; }
+
+		public IDiagram DeepRotate( Coordinate coordinate, Angle angle );
+
 	}
 }

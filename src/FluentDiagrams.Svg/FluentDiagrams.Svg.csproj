@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../VersionInfo.props"/>
+	<Import Project="../VersionInfo.props" />
 	
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
 		<Authors>Corey Tollerud</Authors>
 		<Company />
 		<Description>An SVG Renderer for the FluentDiagrams library.</Description>
@@ -13,12 +13,9 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<LangVersion>8.0</LangVersion>
+		<EnableNETAnalyzers>false</EnableNETAnalyzers>
+		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
   </PropertyGroup>
-
-	<PropertyGroup>
-		<TargetFramework>netstandard1.0</TargetFramework>
-
-	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" Version="1.2.0" />

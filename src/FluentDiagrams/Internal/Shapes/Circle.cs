@@ -1,17 +1,12 @@
-﻿using FluentDiagrams.Primitives;
-using LinqGarden;
-using LinqGarden.Functions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LinqGarden.Functions;
 
 namespace FluentDiagrams.Primitives
 {
 	public class CircleDiagram : IDiagram
 	{
-		public Maybe<BoundingBox> Bounds { get; }
+		public BoundingBox Bounds { get; }
 
-		public static CircleDiagram Default => 
+		public static CircleDiagram Default =>
 			new CircleDiagram(
 				radius: 0.5M,
 				origin: Coordinate.Origin() );
@@ -23,10 +18,12 @@ namespace FluentDiagrams.Primitives
 
 			Bounds =
 				( radius * 2 )
-				.Pipe( diameter => BoundingBox.Create( diameter, diameter, origin ) )
-				.Pipe( Maybe.Some );
+				.Pipe( diameter => BoundingBox.Create( diameter, diameter, origin ) );
 		}
 		public decimal Radius { get; }
 		public Coordinate Origin { get; }
+
+		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
+			new CircleDiagram( Radius, Origin.RotateAbout( coordinate, angle ) );
 	}
 }
