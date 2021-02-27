@@ -23,7 +23,13 @@ namespace FluentDiagrams.Primitives
 		public decimal Radius { get; }
 		public Coordinate Origin { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
-			new CircleDiagram( Radius, Origin.RotateAbout( coordinate, angle ) );
+		/// <summary>
+		/// Rotating a circle about its origin is a noop.
+		/// </summary>
+		/// <param name="angle"></param>
+		/// <returns></returns>
+		public IDiagram Rotate( Angle angle ) =>
+			this;
+
 	}
 }

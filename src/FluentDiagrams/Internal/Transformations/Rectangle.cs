@@ -30,16 +30,16 @@ namespace FluentDiagrams.Internal.Transformations
 
 		public BoundingBox Bounds { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle )
+		public IDiagram Rotate( Angle angle )
 		{
-			var newCenter = Bounds.Center().RotateAbout( coordinate, angle );
+			var center = Bounds.Center();
 
 			bool isRotationOrthogonal = ( angle.Rotations * 4 ).Pipe( x => x - Math.Floor( x ) ) == 0M;
 
 			return isRotationOrthogonal
-				? Bounds.RotateAbout( coordinate, angle ).Pipe( x => new RectangleDiagram( x.Width, x.Height, x.Center() ) ).Pipe( x => (IDiagram)x )
+				? Bounds.RotateAbout( center, angle ).Pipe( x => new RectangleDiagram( x.Width, x.Height, x.Center() ) ).Pipe( x => (IDiagram)x )
 				: new[] { Bounds.TopLeft, Bounds.TopRight, Bounds.BottomRight, Bounds.BottomLeft }
-				  .Select( x => x.RotateAbout( coordinate, angle ) )
+				  .Select( x => x.RotateAbout( center, angle ) )
 				  .Pipe( x => new PolygonDiagram( x ) );
 		}
 	}

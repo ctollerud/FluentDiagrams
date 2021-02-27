@@ -16,9 +16,13 @@ namespace FluentDiagrams.Internal.Transformations
 		public decimal Y { get; }
 		public IDiagram Diagram { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle )
-		{
-			throw new System.NotImplementedException();
-		}
+		/// <summary>
+		/// TODO: we can we improve this implementation?
+		/// </summary>
+		/// <param name="coordinate"></param>
+		/// <param name="angle"></param>
+		/// <returns></returns>
+		public IDiagram Rotate( Angle angle ) =>
+			new RotatedDiagram( this, angle, Bounds.Center() );
 	}
 }

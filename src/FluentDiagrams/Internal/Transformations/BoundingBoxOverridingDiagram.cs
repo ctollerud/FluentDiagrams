@@ -17,9 +17,9 @@ namespace FluentDiagrams.Internal.Transformations
 
 		public IDiagram Diagram { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
+		public IDiagram Rotate( Angle angle ) =>
 			new BoundingBoxOverridingDiagram(
-				Diagram.DeepRotate( coordinate, angle ),
-				Bounds.RotateAbout( coordinate, angle ) );
+				Diagram.RotateAbout( Bounds.Center(), angle ),
+				Bounds.RotateAbout( Bounds.Center(), angle ) );
 	}
 }

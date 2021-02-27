@@ -19,7 +19,7 @@ namespace FluentDiagrams.Styling
 		public IDiagram Diagram { get; }
 		public IStyleProperty Property { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
-			new StyleDecorator( Diagram.DeepRotate( coordinate, angle ), Property );
+		public IDiagram Rotate( Angle angle ) =>
+			new StyleDecorator( Diagram.Rotate( angle ), Property );
 	}
 }

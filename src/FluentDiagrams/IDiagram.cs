@@ -6,7 +6,7 @@ namespace FluentDiagrams
 	{
 		BoundingBox Bounds { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle );
+		public IDiagram Rotate( Angle angle );
 
 	}
 }

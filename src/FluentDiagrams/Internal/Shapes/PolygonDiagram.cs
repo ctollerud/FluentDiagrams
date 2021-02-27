@@ -19,7 +19,7 @@ namespace FluentDiagrams.Internal.Shapes
 
 		public BoundingBox Bounds { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
-			new PolygonDiagram( Coordinates.Select( coord => coord.RotateAbout( coordinate, angle ) ) );
+		public IDiagram Rotate( Angle angle ) =>
+			new PolygonDiagram( Coordinates.Select( coord => coord.RotateAbout( Bounds.Center(), angle ) ) );
 	}
 }

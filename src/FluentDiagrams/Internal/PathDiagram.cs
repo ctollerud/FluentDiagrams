@@ -30,9 +30,9 @@ namespace FluentDiagrams.Internal
 		public decimal StrokeWidth { get; }
 		public StrokeStyle StrokeStyle { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle )
+		public IDiagram Rotate( Angle angle )
 		{
-			return new PathDiagram( Instructions.RotateAbout( coordinate, angle ), StrokeWidth, StrokeStyle );
+			return new PathDiagram( Instructions.RotateAbout( Bounds.Center(), angle ), StrokeWidth, StrokeStyle );
 		}
 	}
 }

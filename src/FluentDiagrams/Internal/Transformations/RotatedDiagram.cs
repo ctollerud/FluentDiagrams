@@ -30,7 +30,7 @@ namespace FluentDiagrams.Internal.Transformations
 		/// <param name="coordinate"></param>
 		/// <param name="angle"></param>
 		/// <returns></returns>
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
-			new RotatedDiagram( this, angle, coordinate );
+		public IDiagram Rotate( Angle angle ) =>
+			new RotatedDiagram( this, angle, Bounds.Center() );
 	}
 }

@@ -17,7 +17,7 @@ namespace FluentDiagrams.Internal
 
 		public IDiagram Diagram { get; }
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
-			new RotatedDiagram( this, angle, coordinate );
+		public IDiagram Rotate( Angle angle ) =>
+			new RotatedDiagram( this, angle, this.Diagram.Bounds.Center() );
 	}
 }

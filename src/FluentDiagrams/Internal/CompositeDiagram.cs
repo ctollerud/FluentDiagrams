@@ -49,8 +49,8 @@ namespace FluentDiagrams.Internal
 			.Select( CompositeDiagram.SingleItem )
 			.Aggregate( ( x, y ) => x.FollowedBy( y ) );
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
-			Diagrams.Select( diagram => diagram.DeepRotate( coordinate, angle ) )
+		public IDiagram Rotate( Angle angle ) =>
+			Diagrams.Select( diagram => diagram.RotateAbout( Bounds.Center(), angle ) )
 			.ToImmutableList()
 			.Pipe( x => new CompositeDiagram( x, BoundingBox.Compose( x.Select( y => y.Bounds ) ) ) );
 	}

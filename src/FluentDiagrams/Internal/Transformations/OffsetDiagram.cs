@@ -17,10 +17,10 @@ namespace FluentDiagrams.Internal.Transformations
 			Bounds = innerDiagram.Bounds.Offset( vector );
 		}
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
+		public IDiagram Rotate( Angle angle ) =>
 			Coordinate.Origin().Translate( Vector )
-			.RotateAbout( coordinate, angle )
-			.Pipe( x => Vector.FromCoordinates( Coordinate.Origin(), x ) )
-			.Pipe( x => new OffsetDiagram( InnerDiagram.DeepRotate( InnerDiagram.Bounds.Center(), angle ), x ) );
+			.RotateAbout( Bounds.Center(), angle )
+			.Pipe( newOrigin => Vector.FromCoordinates( Coordinate.Origin(), newOrigin ) )
+			.Pipe( newVector => new OffsetDiagram( InnerDiagram.Rotate( angle ), newVector ) );
 	}
 }

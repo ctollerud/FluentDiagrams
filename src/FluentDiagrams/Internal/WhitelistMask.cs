@@ -15,7 +15,7 @@ namespace FluentDiagrams.Internal
 			Maskee = maskee;
 		}
 
-		public IDiagram DeepRotate( Coordinate coordinate, Angle angle ) =>
-			new WhitelistMask( Mask.DeepRotate( coordinate, angle ), Maskee.DeepRotate( coordinate, angle ) );
+		public IDiagram Rotate( Angle angle ) =>
+			new WhitelistMask( Mask.Rotate( angle ), Maskee.RotateAbout( Bounds.Center(), angle ) );
 	}
 }
