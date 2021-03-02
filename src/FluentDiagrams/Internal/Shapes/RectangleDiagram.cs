@@ -6,7 +6,7 @@ using System.Text;
 using LinqGarden.Functions;
 using FluentDiagrams.Internal.Shapes;
 
-namespace FluentDiagrams.Internal.Transformations
+namespace FluentDiagrams.Internal.Shapes
 {
 	public class RectangleDiagram : IDiagram
 	{

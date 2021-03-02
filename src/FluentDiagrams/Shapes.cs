@@ -1,4 +1,5 @@
-﻿using FluentDiagrams.Primitives;
+﻿using FluentDiagrams.Internal.Shapes;
+using FluentDiagrams.Primitives;
 
 namespace FluentDiagrams
 {
@@ -9,5 +10,12 @@ namespace FluentDiagrams
 		/// </summary>
 		/// <returns></returns>
 		public static IDiagram Circle() => CircleDiagram.Default;
+
+		/// <summary>
+		/// A rectangle with sides of length 1
+		/// </summary>
+		/// <returns></returns>
+		public static IDiagram Square() =>
+			new RectangleDiagram( 1, 1, Coordinate.Origin() );
 	}
 }
