@@ -6,7 +6,17 @@ namespace FluentDiagrams
 {
 	public static class LayoutExtensions
 	{
-		public static IDiagram Scale( this IDiagram diagram, decimal x = 1, decimal y = 1 ) =>
+		public static IDiagram Scale( this IDiagram diagram, decimal x = 1, decimal y = 1 )
+		{
+			return (diagram, x, y) switch
+			{
+				(_, 1, 1 ) => diagram,
+				(IScalable scalable, decimal scaleX, decimal scaleY ) => scalable.PerformScaling( scaleX, scaleY ),
+				_ => diagram.WithScale( x, y )
+			};
+		}
+
+		public static IDiagram WithScale( this IDiagram diagram, decimal x = 1, decimal y = 1 ) =>
 			new ScaledDiagram( diagram, x, y );
 
 
@@ -161,8 +171,16 @@ namespace FluentDiagrams
 		/// <param name="translateX"></param>
 		/// <param name="translateY"></param>
 		/// <returns></returns>
-		public static IDiagram Offset( this IDiagram diagram, decimal translateX, decimal translateY ) =>
-			WithOffset( diagram, new Vector( translateX, translateY ) );
+		public static IDiagram Offset( this IDiagram diagram, decimal translateX, decimal translateY )
+		{
+			return
+			diagram switch
+			{
+				ITranslatable x => x.PerformTranslate( translateX, translateY ),
+				IDiagram x => x.WithOffset( translateX, translateY ),
+				_ => diagram
+			};
+		}
 
 		public static IDiagram Offset( this IDiagram diagram, Vector vector ) =>
 			Offset( diagram, vector.Dx, vector.Dy );
@@ -184,7 +202,7 @@ namespace FluentDiagrams
 
 			var offsetVector = Vector.FromCoordinates( diagramCenter, newDiagramCenter );
 
-			return diagram.Rotate( angle ).WithOffset( offsetVector );
+			return diagram.Rotate( angle ).Offset( offsetVector );
 		}
 
 		public static IDiagram Rotate( this IDiagram diagram, Angle angle )

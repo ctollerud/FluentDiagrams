@@ -26,9 +26,4 @@
     <ProjectReference Include="..\..\submodules\LinqGarden\src\LinqGarden\LinqGarden.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Diagrams\" />
-    <Folder Include="Geometry\" />
-  </ItemGroup>
-
 </Project>

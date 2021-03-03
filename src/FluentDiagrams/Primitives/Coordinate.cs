@@ -43,6 +43,9 @@ namespace FluentDiagrams.Primitives
 		public Coordinate Translate( Vector vector ) =>
 			new Coordinate( X + vector.Dx, Y + vector.Dy );
 
+		public Coordinate Translate( decimal dx, decimal dy ) =>
+			new Coordinate( X + dx, Y + dy );
+
 		public Coordinate RotateAbout( Coordinate rotationOrigin, Angle angle )
 		{
 			//convert to polar coordinates

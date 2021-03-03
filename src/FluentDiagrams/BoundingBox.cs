@@ -3,6 +3,7 @@ using LinqGarden.Enumerables;
 using LinqGarden.Functions;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace FluentDiagrams
@@ -63,11 +64,14 @@ namespace FluentDiagrams
 		}
 
 		public BoundingBox Offset( Vector vector ) =>
+			Offset( vector.Dx, vector.Dy );
+
+		public BoundingBox Offset( decimal dx, decimal dy ) =>
 			new BoundingBox(
-				xMin: this.XMin + vector.Dx,
-				xMax: this.XMax + vector.Dx,
-				yMin: this.YMin + vector.Dy,
-				yMax: this.YMax + vector.Dy );
+				xMin: this.XMin + dx,
+				xMax: this.XMax + dx,
+				yMin: this.YMin + dy,
+				yMax: this.YMax + dy );
 
 		/// <summary>
 		/// create a bounding-box of width/height of 1, with (0,0) at the center.

@@ -3,7 +3,7 @@ using LinqGarden.Functions;
 
 namespace FluentDiagrams.Internal.Transformations
 {
-	public class OffsetDiagram : IDiagram, IRotatable
+	public class OffsetDiagram : IDiagram, IRotatable, ITranslatable, IScalable
 	{
 
 		public IDiagram InnerDiagram { get; }
@@ -19,5 +19,12 @@ namespace FluentDiagrams.Internal.Transformations
 
 		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			new OffsetDiagram( InnerDiagram.Rotate( angle ), Vector );
+
+		IDiagram ITranslatable.PerformTranslate( decimal x, decimal y ) =>
+			new OffsetDiagram( InnerDiagram, new Vector( x, y ).Add( Vector ) );
+
+		IDiagram IScalable.PerformScaling( decimal x, decimal y ) =>
+			new OffsetDiagram( InnerDiagram.Scale( x, y ), Vector );
+
 	}
 }

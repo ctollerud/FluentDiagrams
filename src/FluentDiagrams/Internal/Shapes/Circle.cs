@@ -1,8 +1,9 @@
-﻿using LinqGarden.Functions;
+﻿using FluentDiagrams.Primitives;
+using LinqGarden.Functions;
 
-namespace FluentDiagrams.Primitives
+namespace FluentDiagrams.Internal.Shapes
 {
-	public class CircleDiagram : IDiagram, IRotatable
+	public class CircleDiagram : IDiagram, IRotatable, ITranslatable, IScalable
 	{
 		public BoundingBox Bounds { get; }
 
@@ -31,5 +32,20 @@ namespace FluentDiagrams.Primitives
 		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			this;
 
+		IDiagram ITranslatable.PerformTranslate( decimal x, decimal y ) =>
+			new CircleDiagram( Radius, Origin.Translate( x, y ) );
+
+		IDiagram IScalable.PerformScaling( decimal x, decimal y )
+		{
+			return
+				(x, y) switch
+				{
+					(1, 1 ) => this,
+					(decimal scaleX, decimal scaleY ) when scaleX == scaleY => new CircleDiagram( Radius * scaleX, this.Origin ),
+
+					//Replace this with ellipse once we've implemented it.
+					_ => this.WithScale( x, y )
+				};
+		}
 	}
 }

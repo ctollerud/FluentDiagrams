@@ -7,7 +7,7 @@ using FluentDiagrams.Primitives;
 
 namespace FluentDiagrams.Internal
 {
-	public class CompositeDiagram : IDiagram, IRotatable
+	public class CompositeDiagram : IDiagram, IRotatable, ITranslatable , IScalable
 	{
 		public ImmutableList<IDiagram> Diagrams { get; }
 		public BoundingBox Bounds { get; }
@@ -53,5 +53,38 @@ namespace FluentDiagrams.Internal
 			Diagrams.Select( diagram => diagram.RotateAbout( Bounds.Center(), angle ) )
 			.ToImmutableList()
 			.Pipe( x => new CompositeDiagram( x, BoundingBox.Compose( x.Select( y => y.Bounds ) ) ) );
+
+		IDiagram ITranslatable.PerformTranslate( decimal x, decimal y ) =>
+			Diagrams.Select( diagram => diagram.Offset( x, y ) )
+			.ToImmutableList()
+			.Pipe( diagrams => new CompositeDiagram( diagrams, this.Bounds.Offset( x, y ) ) );
+
+
+		/// <summary>
+		/// Scale the diagram around a specific point.  This can be done by using an offset and a scale together
+		/// </summary>
+		private static IDiagram RescaleSubdiagram( IDiagram diagram, Coordinate scaleAround, decimal scaleX, decimal scaleY )
+		{
+			var oldCenter = diagram.Bounds.Center();
+
+			var xAdjustment =
+				oldCenter.X
+				.Pipe( x => x - scaleAround.X )
+				.Pipe( x => x * ( 1M - scaleX ) )
+				.Pipe( x => -x );
+
+			var yAdjustment =
+				oldCenter.Y
+				.Pipe( x => x - scaleAround.Y )
+				.Pipe( x => x * ( 1M - scaleY ) )
+				.Pipe( x => -x );
+
+			return diagram.Offset( xAdjustment, yAdjustment ).Scale( scaleX, scaleY );
+		}
+
+		IDiagram IScalable.PerformScaling( decimal x, decimal y ) =>
+			Diagrams.Select( diagram => RescaleSubdiagram( diagram, this.Bounds.Center(), x, y ) )
+			.ToImmutableList()
+			.Pipe( diagrams => new CompositeDiagram( diagrams, this.Bounds.Scale( x, y ) ) );
 	}
 }
