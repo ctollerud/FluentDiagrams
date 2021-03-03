@@ -3,7 +3,7 @@ using LinqGarden.Functions;
 
 namespace FluentDiagrams.Internal.Transformations
 {
-	public class OffsetDiagram : IDiagram
+	public class OffsetDiagram : IDiagram, IRotatable
 	{
 
 		public IDiagram InnerDiagram { get; }
@@ -17,7 +17,7 @@ namespace FluentDiagrams.Internal.Transformations
 			Bounds = innerDiagram.Bounds.Offset( vector );
 		}
 
-		public IDiagram Rotate( Angle angle ) =>
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			new OffsetDiagram( InnerDiagram.Rotate( angle ), Vector );
 	}
 }

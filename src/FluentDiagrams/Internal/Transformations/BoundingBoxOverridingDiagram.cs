@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FluentDiagrams.Internal.Transformations
 {
-	public class BoundingBoxOverridingDiagram : IDiagram
+	public class BoundingBoxOverridingDiagram : IDiagram, IRotatable
 	{
 		internal BoundingBoxOverridingDiagram( IDiagram diagram, BoundingBox newBoundingBox )
 		{
@@ -17,7 +17,7 @@ namespace FluentDiagrams.Internal.Transformations
 
 		public IDiagram Diagram { get; }
 
-		public IDiagram Rotate( Angle angle ) =>
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			new BoundingBoxOverridingDiagram(
 				Diagram.RotateAbout( Bounds.Center(), angle ),
 				Bounds.RotateAbout( Bounds.Center(), angle ) );

@@ -180,24 +180,11 @@ namespace FluentDiagrams
 		{
 			var diagramCenter = diagram.Bounds.Center();
 
-			var newDiagramCenter = diagramCenter.RotateAbout( coordinate, angle );
+			var newDiagramCenter = diagram.Bounds.Center().RotateAbout( coordinate, angle );
 
 			var offsetVector = Vector.FromCoordinates( diagramCenter, newDiagramCenter );
 
 			return diagram.Rotate( angle ).WithOffset( offsetVector );
 		}
-
-		public static IDiagram Rotate( this IDiagram diagram, Angle angle )
-		{
-			return diagram switch
-			{
-				IRotatable x => x.PerformRotate( angle ),
-				IDiagram x => x.WithRotate( angle ),
-				_ => diagram
-			};
-		}
-
-		public static IDiagram WithRotate( this IDiagram diagram, Angle angle ) =>
-			new RotatedDiagram( diagram, angle, diagram.Bounds.Center() );
 	}
 }

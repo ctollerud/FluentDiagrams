@@ -2,7 +2,7 @@
 
 namespace FluentDiagrams.Primitives
 {
-	public class CircleDiagram : IDiagram
+	public class CircleDiagram : IDiagram, IRotatable
 	{
 		public BoundingBox Bounds { get; }
 
@@ -28,7 +28,7 @@ namespace FluentDiagrams.Primitives
 		/// </summary>
 		/// <param name="angle"></param>
 		/// <returns></returns>
-		public IDiagram Rotate( Angle angle ) =>
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			this;
 
 	}

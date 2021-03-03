@@ -15,7 +15,7 @@ namespace FluentDiagrams.Internal
 
 	}
 
-	public class PathDiagram : IDiagram
+	public class PathDiagram : IDiagram, IRotatable
 	{
 		public PathDiagram( PathInstructions instructions, decimal strokeWidth, StrokeStyle strokeStyle )
 		{
@@ -30,7 +30,7 @@ namespace FluentDiagrams.Internal
 		public decimal StrokeWidth { get; }
 		public StrokeStyle StrokeStyle { get; }
 
-		public IDiagram Rotate( Angle angle )
+		IDiagram IRotatable.PerformRotate( Angle angle )
 		{
 			return new PathDiagram( Instructions.RotateAbout( Bounds.Center(), angle ), StrokeWidth, StrokeStyle );
 		}

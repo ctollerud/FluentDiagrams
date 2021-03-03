@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FluentDiagrams.Internal
 {
-	public class DefinedDiagram : IDiagram
+	public class DefinedDiagram : IDiagram, IRotatable
 	{
 		public DefinedDiagram( IDiagram diagram )
 		{
@@ -17,7 +17,7 @@ namespace FluentDiagrams.Internal
 
 		public IDiagram Diagram { get; }
 
-		public IDiagram Rotate( Angle angle ) =>
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			new RotatedDiagram( this, angle, this.Diagram.Bounds.Center() );
 	}
 }

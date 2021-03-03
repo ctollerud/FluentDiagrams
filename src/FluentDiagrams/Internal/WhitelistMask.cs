@@ -2,7 +2,7 @@
 
 namespace FluentDiagrams.Internal
 {
-	public class WhitelistMask : IDiagram
+	public class WhitelistMask : IDiagram, IRotatable
 	{
 		public IDiagram Mask { get; }
 		public IDiagram Maskee { get; }
@@ -15,7 +15,7 @@ namespace FluentDiagrams.Internal
 			Maskee = maskee;
 		}
 
-		public IDiagram Rotate( Angle angle ) =>
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			new WhitelistMask( Mask.Rotate( angle ), Maskee.RotateAbout( Bounds.Center(), angle ) );
 	}
 }

@@ -7,7 +7,7 @@ using FluentDiagrams.Primitives;
 
 namespace FluentDiagrams.Internal
 {
-	public class CompositeDiagram : IDiagram
+	public class CompositeDiagram : IDiagram, IRotatable
 	{
 		public ImmutableList<IDiagram> Diagrams { get; }
 		public BoundingBox Bounds { get; }
@@ -49,7 +49,7 @@ namespace FluentDiagrams.Internal
 			.Select( CompositeDiagram.SingleItem )
 			.Aggregate( ( x, y ) => x.FollowedBy( y ) );
 
-		public IDiagram Rotate( Angle angle ) =>
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			Diagrams.Select( diagram => diagram.RotateAbout( Bounds.Center(), angle ) )
 			.ToImmutableList()
 			.Pipe( x => new CompositeDiagram( x, BoundingBox.Compose( x.Select( y => y.Bounds ) ) ) );

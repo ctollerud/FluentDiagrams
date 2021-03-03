@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FluentDiagrams.Internal.Transformations
 {
-	public class RotatedDiagram : IDiagram
+	public class RotatedDiagram : IDiagram, IRotatable
 	{
 		public IDiagram Diagram { get; }
 		public Angle Angle { get; }
@@ -21,16 +21,7 @@ namespace FluentDiagrams.Internal.Transformations
 			Bounds = Diagram.Bounds.RotateAbout( rotationOrigin, angle );
 		}
 
-		/// <summary>
-		/// cat's out of the bag. Just tack the next rotate on top
-		/// TODO: we can optimize this!
-		///		1. We need to determine where the new origin is
-		///		2. We need to perform some amount of rotation to this object.
-		/// </summary>
-		/// <param name="coordinate"></param>
-		/// <param name="angle"></param>
-		/// <returns></returns>
-		public IDiagram Rotate( Angle angle ) =>
-			new RotatedDiagram( this, angle, Bounds.Center() );
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
+			new RotatedDiagram( this, Angle.Plus( angle ), Bounds.Center() );
 	}
 }

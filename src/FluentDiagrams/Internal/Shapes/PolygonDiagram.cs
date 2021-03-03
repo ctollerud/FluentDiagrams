@@ -7,7 +7,7 @@ using LinqGarden.Enumerables;
 
 namespace FluentDiagrams.Internal.Shapes
 {
-	public class PolygonDiagram : IDiagram
+	public class PolygonDiagram : IDiagram, IRotatable
 	{
 		public ICollection<Coordinate> Coordinates { get; }
 
@@ -19,7 +19,7 @@ namespace FluentDiagrams.Internal.Shapes
 
 		public BoundingBox Bounds { get; }
 
-		public IDiagram Rotate( Angle angle ) =>
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			new PolygonDiagram( Coordinates.Select( coord => coord.RotateAbout( Bounds.Center(), angle ) ) );
 	}
 }

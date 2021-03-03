@@ -6,7 +6,7 @@ namespace FluentDiagrams.Styling
 	/// <summary>
 	/// Represents a diagram with some styling applied.
 	/// </summary>
-	public class StyleDecorator : IDiagram
+	public class StyleDecorator : IDiagram, IRotatable
 	{
 		public StyleDecorator( IDiagram diagram, IStyleProperty property )
 		{
@@ -19,7 +19,7 @@ namespace FluentDiagrams.Styling
 		public IDiagram Diagram { get; }
 		public IStyleProperty Property { get; }
 
-		public IDiagram Rotate( Angle angle ) =>
+		IDiagram IRotatable.PerformRotate( Angle angle ) =>
 			new StyleDecorator( Diagram.Rotate( angle ), Property );
 	}
 }
