@@ -1,4 +1,5 @@
-﻿using FluentDiagrams.Internal.Transformations;
+﻿using FluentDiagrams.Internal;
+using FluentDiagrams.Internal.Transformations;
 using FluentDiagrams.Primitives;
 
 namespace FluentDiagrams
@@ -80,43 +81,9 @@ namespace FluentDiagrams
 			var rightDiagramLeftEdge = rightDiagram.Bounds.XMin;
 
 			var vector = new Vector( rightDiagramLeftEdge - leftDiagramRightEdge, 0 )
-				.Add( ComputeAlignment( leftDiagram, rightDiagram, alignment, null ) );
+				.Add( LayoutUtilities.ComputeAlignment( leftDiagram, rightDiagram, alignment, null ) );
 
 			return leftDiagram.Offset( vector.Dx, vector.Dy );
-		}
-
-		/// <summary>
-		/// Compute a vector that would move a diagram into alignment with the other diagram.
-		/// </summary>
-		/// <param name="diagramToMove"></param>
-		/// <param name="diagramToCompare"></param>
-		/// <param name="verticalAlignment"></param>
-		/// <param name="horizontalAlignment"></param>
-		/// <returns></returns>
-		private static Vector ComputeAlignment(
-			IDiagram diagramToMove,
-			IDiagram diagramToCompare,
-			VerticalAlignment? verticalAlignment,
-			HorizontalAlignment? horizontalAlignment )
-		{
-			var verticalOffset =
-				verticalAlignment switch
-				{
-					VerticalAlignment.Bottom => diagramToCompare.Bounds.YMin - diagramToMove.Bounds.YMin,
-					VerticalAlignment.Top => diagramToCompare.Bounds.YMax - diagramToMove.Bounds.YMax,
-					VerticalAlignment.Center => diagramToCompare.Bounds.Center().Y - diagramToMove.Bounds.Center().Y,
-					_ => 0M
-				};
-
-			var horizontalOffset =
-				horizontalAlignment switch
-				{
-					HorizontalAlignment.Left => diagramToCompare.Bounds.XMin - diagramToMove.Bounds.XMin,
-					HorizontalAlignment.Right => diagramToCompare.Bounds.XMax - diagramToMove.Bounds.XMax,
-					HorizontalAlignment.Center => diagramToCompare.Bounds.Center().X - diagramToMove.Bounds.Center().X,
-					_ => 0M
-				};
-			return new Vector( horizontalOffset, verticalOffset );
 		}
 
 		/// <summary>
@@ -133,7 +100,7 @@ namespace FluentDiagrams
 			var leftDiagramRightEdge = leftDiagram.Bounds.XMax;
 
 			var vector = new Vector( leftDiagramRightEdge - rightDiagramLeftEdge, 0 )
-				.Add( ComputeAlignment( rightDiagram, leftDiagram, alignment, null ) );
+				.Add( LayoutUtilities.ComputeAlignment( rightDiagram, leftDiagram, alignment, null ) );
 
 			return rightDiagram.Offset( vector.Dx, vector.Dy );
 		}
@@ -154,7 +121,7 @@ namespace FluentDiagrams
 
 			var vector = new Vector( 0, bottomDiagramTopEdge - topDiagramBottomEdge )
 				.Add(
-					ComputeAlignment(
+					LayoutUtilities.ComputeAlignment(
 						topDiagram,
 						bottomDiagram,
 						null,
@@ -177,7 +144,7 @@ namespace FluentDiagrams
 
 			var vector = new Vector( 0, topDiagramBottomEdge - bottomDiagramTopEdge )
 				.Add(
-					ComputeAlignment(
+					LayoutUtilities.ComputeAlignment(
 						bottomDiagram,
 						topDiagram,
 						null,
@@ -211,11 +178,13 @@ namespace FluentDiagrams
 
 		public static IDiagram RotateAbout( this IDiagram diagram, Coordinate coordinate, Angle angle )
 		{
-			var newOrigin = diagram.Bounds.Center().RotateAbout( coordinate, angle );
+			var diagramCenter = diagram.Bounds.Center();
 
-			var offsetVector = Vector.FromCoordinates( coordinate, newOrigin );
+			var newDiagramCenter = diagramCenter.RotateAbout( coordinate, angle );
 
-			return diagram.WithOffset( offsetVector );
+			var offsetVector = Vector.FromCoordinates( diagramCenter, newDiagramCenter );
+
+			return diagram.Rotate( angle ).WithOffset( offsetVector );
 		}
 	}
 }

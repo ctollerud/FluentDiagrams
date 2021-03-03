@@ -18,9 +18,6 @@ namespace FluentDiagrams.Internal.Transformations
 		}
 
 		public IDiagram Rotate( Angle angle ) =>
-			Coordinate.Origin().Translate( Vector )
-			.RotateAbout( Bounds.Center(), angle )
-			.Pipe( newOrigin => Vector.FromCoordinates( Coordinate.Origin(), newOrigin ) )
-			.Pipe( newVector => new OffsetDiagram( InnerDiagram.Rotate( angle ), newVector ) );
+			new OffsetDiagram( InnerDiagram.Rotate( angle ), Vector );
 	}
 }
