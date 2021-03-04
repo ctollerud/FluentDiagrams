@@ -1,7 +1,7 @@
 ﻿using FluentDiagrams.Primitives;
 using FluentDiagrams.StyleProperties;
 
-namespace FluentDiagrams.Styling
+namespace FluentDiagrams.Internal
 {
 	/// <summary>
 	/// Represents a diagram with some styling applied.
@@ -24,12 +24,12 @@ namespace FluentDiagrams.Styling
 			new StyleDecorator( newDiagram, Property );
 
 		IDiagram IScalable.PerformScaling( decimal x, decimal y ) =>
-			this.WithNewDiagram( Diagram.Scale( x, y ) );
+			WithNewDiagram( Diagram.Scale( x, y ) );
 
 		public IDiagram PerformTranslate( decimal x, decimal y ) =>
-			this.WithNewDiagram( Diagram.Offset( x, y ) );
+			WithNewDiagram( Diagram.Offset( x, y ) );
 
 		IDiagram IRotatable.PerformRotate( Angle angle ) =>
-			this.WithNewDiagram( Diagram.Rotate( angle ) );
+			WithNewDiagram( Diagram.Rotate( angle ) );
 	}
 }

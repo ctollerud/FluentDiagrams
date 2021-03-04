@@ -3,7 +3,6 @@ using FluentDiagrams.Internal.Shapes;
 using FluentDiagrams.Internal.Transformations;
 using FluentDiagrams.Paths;
 using FluentDiagrams.Primitives;
-using FluentDiagrams.Styling;
 using FluentDiagrams.Svg.Internal;
 using LinqGarden;
 using LinqGarden.Functions;

@@ -19,7 +19,6 @@ namespace FluentDiagrams
 		public static IDiagram WithScale( this IDiagram diagram, decimal x = 1, decimal y = 1 ) =>
 			new ScaledDiagram( diagram, x, y );
 
-
 		/// <summary>
 		/// Reorients the diagram to the bottom of the other diagram and combines them into a single diagram.
 		/// </summary>
