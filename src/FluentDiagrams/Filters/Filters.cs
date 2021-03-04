@@ -97,8 +97,10 @@ namespace FluentDiagrams.Core.Filters
 
 		public static IFilterComponent FloodPreserveAlpha( Color fillColor )
 		{
-			decimal CreateOffset( byte colorComponent ) =>
-				( (decimal)colorComponent ) / 255;
+			static decimal CreateOffset( byte colorComponent )
+			{
+				return ( (decimal)colorComponent ) / 255;
+			}
 
 			return ScaleComponents(
 				scaleRed: 0,

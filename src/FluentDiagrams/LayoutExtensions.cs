@@ -217,5 +217,8 @@ namespace FluentDiagrams
 
 		public static IDiagram WithRotate( this IDiagram diagram, Angle angle ) =>
 			new RotatedDiagram( diagram, angle, diagram.Bounds.Center() );
+
+		public static IDiagram OffsetTo( this IDiagram diagram, IDiagram dest ) =>
+			diagram.Offset( Vector.FromCoordinates( diagram.Bounds.Center(), dest.Bounds.Center() ) );
 	}
 }
