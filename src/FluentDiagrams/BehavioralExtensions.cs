@@ -9,7 +9,11 @@ namespace FluentDiagrams
 	{
 
 		/// <summary>
-		/// Using the renderer, "defines" the diagram so that it isn't written into the output multiple times.
+		/// "defines" the diagram so that it isn't written into the output multiple times.
+		/// This allows technologies like SVG, for instance, to more effectively decrease their over-all size.
+		///
+		/// A diagram that's already defined can't be geometrically translated, scaled, or rotated,
+		/// and will rely more heavilly on the renderer's ability to handle these processes.
 		/// </summary>
 		/// <param name="diagram"></param>
 		/// <returns></returns>

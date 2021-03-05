@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using FluentDiagrams.Internal.Transformations;
@@ -93,6 +94,20 @@ namespace FluentDiagrams
 			}
 
 
+		}
+
+		/// <summary>
+		/// Scale down the size of the diagram to something else, by cutting off edges
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="scaleX"></param>
+		/// <param name="scaleY"></param>
+		/// <returns></returns>
+		public static IDiagram Trim( this IDiagram input, decimal scaleX, decimal scaleY )
+		{
+			var square = Shapes.Square().WithFill( Color.White ).ScaleTo( input ).OffsetTo( input ).Scale( scaleX, scaleY );
+
+			return square.AsMaskOver( input );
 		}
 
 		/// <summary>

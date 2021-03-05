@@ -48,6 +48,7 @@ namespace FluentDiagrams.Svg
 			return diagram switch
 			{
 				CircleDiagram x => RenderCircle( x ),
+				EllipseDiagram x => RenderEllipseDiagram( x ),
 				CompositeDiagram x => RenderCompositeDiagram( x ),
 				ScaledDiagram x => RenderScaled( x ),
 				OffsetDiagram x => RenderOffsetDiagram( x ),
@@ -74,6 +75,19 @@ namespace FluentDiagrams.Svg
 					new XAttribute( "cx", origin.X ),
 					new XAttribute( "cy", origin.Y ),
 					new XAttribute( "r", svgUnitsRadius ) );
+
+		private static State<SvgDrawState, XElementBuilder> RenderEllipseDiagram( EllipseDiagram ellipse ) =>
+			from state in State.Get<SvgDrawState>()
+			let svgUnitsRadiusX = state.Converter.ScaleDistance( ellipse.Rx )
+			let svgUnitsRadiusY = state.Converter.ScaleDistance( ellipse.Ry )
+			let center = ellipse.Center.Pipe( state.Converter.ToSvgCoord )
+			select
+				XElementBuilder.WithName( "ellipse" )
+				.Add(
+					new XAttribute( "cx", center.X ),
+					new XAttribute( "cy", center.Y ),
+					new XAttribute( "rx", svgUnitsRadiusX ),
+					new XAttribute( "ry", svgUnitsRadiusY ) );
 
 		private static XElementBuilder AddSvgTransform( XElementBuilder builder, string transformInstruction ) =>
 			builder.AddOrModifyAttribute( "transform",

@@ -7,7 +7,7 @@ using FluentDiagrams.Primitives;
 
 namespace FluentDiagrams.Internal
 {
-	public class CompositeDiagram : IDiagram, IRotatable, ITranslatable , IScalable
+	public class CompositeDiagram : IDiagram, IRotatable, ITranslatable, IScalable
 	{
 		public ImmutableList<IDiagram> Diagrams { get; }
 		public BoundingBox Bounds { get; }

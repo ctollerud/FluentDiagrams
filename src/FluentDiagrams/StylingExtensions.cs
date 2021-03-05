@@ -1,4 +1,5 @@
-﻿using FluentDiagrams.StyleProperties;
+﻿using FluentDiagrams.Internal;
+using FluentDiagrams.StyleProperties;
 using FluentDiagrams.Styling;
 using System.Drawing;
 

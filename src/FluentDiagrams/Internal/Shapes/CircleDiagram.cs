@@ -7,11 +7,6 @@ namespace FluentDiagrams.Internal.Shapes
 	{
 		public BoundingBox Bounds { get; }
 
-		public static CircleDiagram Default =>
-			new CircleDiagram(
-				radius: 0.5M,
-				origin: Coordinate.Origin() );
-
 		internal CircleDiagram( decimal radius, Coordinate origin )
 		{
 			Radius = radius;
@@ -43,8 +38,7 @@ namespace FluentDiagrams.Internal.Shapes
 					(1, 1 ) => this,
 					(decimal scaleX, decimal scaleY ) when scaleX == scaleY => new CircleDiagram( Radius * scaleX, this.Origin ),
 
-					//Replace this with ellipse once we've implemented it.
-					_ => this.WithScale( x, y )
+					_ => FluentDiagrams.Shapes.Ellipse( Radius * x, Radius * y )
 				};
 		}
 	}

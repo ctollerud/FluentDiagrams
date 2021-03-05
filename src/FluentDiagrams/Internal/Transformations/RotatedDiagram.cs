@@ -22,6 +22,6 @@ namespace FluentDiagrams.Internal.Transformations
 		}
 
 		IDiagram IRotatable.PerformRotate( Angle angle ) =>
-			new RotatedDiagram( this, Angle.Plus( angle ), Bounds.Center() );
+			new RotatedDiagram( Diagram, Angle.Plus( angle ), Bounds.Center() );
 	}
 }
