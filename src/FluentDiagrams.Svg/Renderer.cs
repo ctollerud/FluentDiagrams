@@ -50,6 +50,7 @@ namespace FluentDiagrams.Svg
 				CircleDiagram x => RenderCircle( x ),
 				EllipseDiagram x => RenderEllipseDiagram( x ),
 				CompositeDiagram x => RenderCompositeDiagram( x ),
+				ViewboxDiagram x => RenderViewboxDiagram( x ),
 				ScaledDiagram x => RenderScaled( x ),
 				OffsetDiagram x => RenderOffsetDiagram( x ),
 				StyleDecorator x => RenderStyleDecorator( x ),
@@ -64,6 +65,36 @@ namespace FluentDiagrams.Svg
 				_ => throw new DiagramNotRenderableException( diagram )
 			};
 		}
+
+		private static State<SvgDrawState, XElementBuilder> RenderViewboxDiagram( ViewboxDiagram diagram ) =>
+			from subElement in RenderSvg( diagram.Diagram )
+			from state in State.Get<SvgDrawState>()
+			let converter = state.Converter
+			let svgXMin = converter.TranslateX( diagram.XMin )
+			let svgYMax = converter.TranslateY( diagram.YMin )
+			let height = converter.ScaleDistance( diagram.Bounds.Height )
+			let width = converter.ScaleDistance( diagram.Bounds.Width )
+			let svgYMin = svgYMax - height
+			let topLeft = converter.ToSvgCoord( diagram.Bounds.TopLeft )
+			select
+				XElementBuilder.WithName( "svg" )
+				.Add(
+
+					new XAttribute( "stroke-width", 0 ),
+					new XAttribute( "x", topLeft.X ),
+					new XAttribute( "y", topLeft.Y ),
+					new XAttribute( "width", width ),
+					new XAttribute( "height", height ),
+
+					//for now, the width and the height of the viewbox will be equivalent to the SVG 
+					// element, since there's no current need for scaling.
+					new XAttribute( "viewBox", $"{svgXMin} {svgYMin} {width} {height}" )
+
+					)
+				.Add( subElement.Build() )
+
+				//wrap in a g so that transforms occur correctly
+				.Pipe( x => XElementBuilder.WithName( "g" ).Add( x.Build() ) );
 
 		private static State<SvgDrawState, XElementBuilder> RenderCircle( CircleDiagram circle ) =>
 			from state in State.Get<SvgDrawState>()

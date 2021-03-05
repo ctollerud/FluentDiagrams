@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using FluentDiagrams.Internal;
 using FluentDiagrams.Internal.Transformations;
 using LinqGarden.Functions;
 
@@ -97,18 +98,73 @@ namespace FluentDiagrams
 		}
 
 		/// <summary>
-		/// Scale down the size of the diagram to something else, by cutting off edges
+		/// Scale up/down the size of the diagram to something else, by either clipping or
+		/// adding margins.
+		/// 
+		/// The resulting diagram will have a rectangular envelope.
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="scaleX"></param>
+		/// <param name="scaleY"></param>
+		/// <param name="horizontalAlignment">How the cropping should align with the original horizontally</param>
+		/// <param name="verticalAlignment">How the cropping should align with the original vertically</param>
+		/// <returns></returns>
+		public static IDiagram CropScale( this IDiagram input, decimal scaleX, decimal scaleY, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment )
+		{
+
+			var oldBounds = input.Bounds;
+			var scaledBounds = BoundingBox.Create( oldBounds.Width * scaleX, oldBounds.Height * scaleY );
+
+			var translation = LayoutUtilities.ComputeAlignment( scaledBounds, oldBounds, verticalAlignment, horizontalAlignment );
+
+			var newBounds = scaledBounds.Offset( translation );
+			return new ViewboxDiagram(
+				input,
+				newBounds.Offset( translation ),
+				xMin: newBounds.XMin, yMin: newBounds.YMin );
+
+		}
+
+		/// <summary>
+		/// Scale up/down the size of the diagram to something else, by either clipping or
+		/// adding margins.
+		/// 
+		/// The resulting diagram will have a rectangular envelope.
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="scaleX"></param>
+		/// <param name="scaleY"></param>
+		/// <param name="horizontalAlignment">How the cropping should align with the original horizontally</param>
+		/// <returns></returns>
+		public static IDiagram CropScale( this IDiagram input, decimal scaleX, decimal scaleY, HorizontalAlignment horizontalAlignment ) =>
+			CropScale( input, scaleX, scaleY, horizontalAlignment, VerticalAlignment.Center );
+
+		/// <summary>
+		/// Scale up/down the size of the diagram to something else, by either clipping or
+		/// adding margins.
+		/// 
+		/// The resulting diagram will have a rectangular envelope.
+		/// </summary>
+		/// <param name="input"></param>
+		/// <param name="scaleX"></param>
+		/// <param name="scaleY"></param>
+		/// <param name="verticalAlignment">How the cropping should align with the original vertically</param>
+		/// <returns></returns>
+		public static IDiagram CropScale( this IDiagram input, decimal scaleX, decimal scaleY, VerticalAlignment verticalAlignment ) =>
+			CropScale( input, scaleX, scaleY, HorizontalAlignment.Center, verticalAlignment );
+
+		/// <summary>
+		/// Scale up/down the size of the diagram to something else, by either clipping or
+		/// adding margins.
+		/// 
+		/// The resulting diagram will have a rectangular envelope with the same center as the original.
 		/// </summary>
 		/// <param name="input"></param>
 		/// <param name="scaleX"></param>
 		/// <param name="scaleY"></param>
 		/// <returns></returns>
-		public static IDiagram Trim( this IDiagram input, decimal scaleX, decimal scaleY )
-		{
-			var square = Shapes.Square().WithFill( Color.White ).ScaleTo( input ).OffsetTo( input ).Scale( scaleX, scaleY );
-
-			return square.AsMaskOver( input );
-		}
+		public static IDiagram CropScale( this IDiagram input, decimal scaleX, decimal scaleY ) =>
+			CropScale( input, scaleX, scaleY, HorizontalAlignment.Center, VerticalAlignment.Center );
 
 		/// <summary>
 		/// expand the diagrams margins so that it fits the specified width/height
