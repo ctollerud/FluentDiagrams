@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using LinqGarden.Functions;
 using static FluentDiagrams.Svg.Internal.SvgColorFactory;
 using FluentDiagrams.StyleProperties;
+using LinqGarden;
 
 namespace FluentDiagrams.Svg.Internal
 {

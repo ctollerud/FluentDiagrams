@@ -75,7 +75,11 @@ namespace FluentDiagrams
 			return background.Then( mask );
 		}
 
-		public static IDiagram ClipToSizeOf( this IDiagram diagram, IDiagram sizeProvider )
+		public static IDiagram CropToSizeOf(
+			this IDiagram diagram,
+			IDiagram sizeProvider,
+			HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment verticalAlignment = VerticalAlignment.Center )
 		{
 			var boundingBoxes = new[] { diagram.Bounds, sizeProvider.Bounds };
 			var newBoundingBox =
@@ -91,7 +95,11 @@ namespace FluentDiagrams
 			}
 			else
 			{
-				return new BoundingBoxOverridingDiagram( diagram, newBoundingBox );
+				return Crop( diagram, newBoundingBox.Offset( LayoutUtilities.ComputeAlignment(
+					newBoundingBox,
+					diagram.Bounds,
+					verticalAlignment,
+					horizontalAlignment ) ) );
 			}
 
 
@@ -118,11 +126,17 @@ namespace FluentDiagrams
 			var translation = LayoutUtilities.ComputeAlignment( scaledBounds, oldBounds, verticalAlignment, horizontalAlignment );
 
 			var newBounds = scaledBounds.Offset( translation );
+			return Crop( input, newBounds );
+
+		}
+
+		private static IDiagram Crop( this IDiagram input, BoundingBox newBounds )
+		{
 			return new ViewboxDiagram(
 				input,
-				newBounds.Offset( translation ),
-				xMin: newBounds.XMin, yMin: newBounds.YMin );
-
+				newBounds,
+				xMin: newBounds.XMin,
+				yMin: newBounds.YMin );
 		}
 
 		/// <summary>
@@ -167,12 +181,12 @@ namespace FluentDiagrams
 			CropScale( input, scaleX, scaleY, HorizontalAlignment.Center, VerticalAlignment.Center );
 
 		/// <summary>
-		/// expand the diagrams margins so that it fits the specified width/height
+		/// expand the diagram's bounding box so that it fits the specified width/height
 		/// </summary>
 		/// <param name="diagram"></param>
 		/// <param name="widthOverHeight"></param>
 		/// <returns></returns>
-		public static IDiagram MarginToAspectRatio( this IDiagram diagram, decimal widthOverHeight )
+		public static IDiagram ExpandToAspectRatio( this IDiagram diagram, decimal widthOverHeight )
 		{
 			var currentBoundingBox = diagram.Bounds;
 			BoundingBox newBoundingBox = ScaleUpToAspectRatio( diagram.Bounds, widthOverHeight );
