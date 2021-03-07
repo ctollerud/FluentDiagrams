@@ -67,19 +67,20 @@ namespace FluentDiagrams.Internal
 		{
 			var oldCenter = diagram.Bounds.Center();
 
-			var xAdjustment =
-				oldCenter.X
-				.Pipe( x => x - scaleAround.X )
-				.Pipe( x => x * ( 1M - scaleX ) )
-				.Pipe( x => -x );
+			var oldXDistance =
+				oldCenter.X - scaleAround.X;
 
-			var yAdjustment =
-				oldCenter.Y
-				.Pipe( x => x - scaleAround.Y )
-				.Pipe( x => x * ( 1M - scaleY ) )
-				.Pipe( x => -x );
+			var newXDistance = oldXDistance * scaleX;
 
-			return diagram.Offset( xAdjustment, yAdjustment ).Scale( scaleX, scaleY );
+			var xAdjustment = newXDistance - oldXDistance;
+
+			var oldYDistance = oldCenter.Y - scaleAround.Y;
+			var newYDistance = oldYDistance * scaleY;
+			var yAdjustment = newYDistance - oldYDistance;
+
+			return diagram
+				.Offset( xAdjustment, yAdjustment )
+				.Scale( scaleX, scaleY );
 		}
 
 		IDiagram IScalable.PerformScaling( decimal x, decimal y ) =>

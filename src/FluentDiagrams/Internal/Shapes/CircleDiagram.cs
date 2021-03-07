@@ -38,7 +38,7 @@ namespace FluentDiagrams.Internal.Shapes
 					(1, 1 ) => this,
 					(decimal scaleX, decimal scaleY ) when scaleX == scaleY => new CircleDiagram( Radius * scaleX, this.Origin ),
 
-					_ => FluentDiagrams.Shapes.Ellipse( Radius * x, Radius * y )
+					_ => FluentDiagrams.Shapes.Ellipse( Radius * x, Radius * y, this.Origin )
 				};
 		}
 	}

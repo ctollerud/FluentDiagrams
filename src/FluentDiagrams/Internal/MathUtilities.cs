@@ -19,5 +19,21 @@ namespace FluentDiagrams.Internal
 				.Pipe( x => x * ( outMax - outMin ) )
 				.Pipe( x => x + outMin );
 
+		public static double Rescale(
+					double input,
+					double inMin,
+					double inMax,
+					double outMin,
+					double outMax,
+					double curve = 1 ) =>
+				input
+				.Pipe( x => x - inMin )
+				.Pipe( x => x / ( inMax - inMin ) )
+
+				.Pipe( x => Math.Pow( x, curve ) )
+
+				.Pipe( x => x * ( outMax - outMin ) )
+				.Pipe( x => x + outMin );
+
 	}
 }
