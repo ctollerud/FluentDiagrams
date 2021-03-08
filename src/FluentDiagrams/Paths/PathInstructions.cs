@@ -15,7 +15,7 @@ namespace FluentDiagrams.Paths
 
 		public PathInstructions RotateAbout( Coordinate rotationOrigin, Angle angle )
 		{
-			return new PathInstructions( StartLocation, Instructions.Select( x => x.RotateAbout( rotationOrigin, angle ) ).ToArray() );
+			return new PathInstructions( StartLocation.RotateAbout( rotationOrigin, angle ), Instructions.Select( x => x.RotateAbout( rotationOrigin, angle ) ).ToArray() );
 		}
 
 		public PathInstructions( Coordinate startLocation, params IPathInstruction[] instructions )

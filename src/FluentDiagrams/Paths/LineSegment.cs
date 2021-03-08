@@ -19,8 +19,11 @@ namespace FluentDiagrams.Paths
 		public static LineSegment Create( Coordinate coord1, Vector vector ) =>
 			new LineSegment( coord1, coord1.Translate( vector ) );
 
-		public IPathSegment RotateAbout( Coordinate rotationOrigin, Angle angle ) =>
+		public LineSegment RotateAbout( Coordinate rotationOrigin, Angle angle ) =>
 			new LineSegment( Coord1.RotateAbout( rotationOrigin, angle ), Coord2.RotateAbout( rotationOrigin, angle ) );
+
+		public LineSegment Offset( Vector input ) =>
+			new LineSegment( Coord1.Translate( input ), Coord2.Translate( input ) );
 
 		public BoundingBox GetBoundingBox( decimal strokeWidth )
 		{

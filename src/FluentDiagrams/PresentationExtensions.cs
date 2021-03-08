@@ -51,6 +51,36 @@ namespace FluentDiagrams
 			}
 		}
 
+		private static BoundingBox ScaleDownToAspectRatio(
+			BoundingBox boundingBox,
+			decimal widthOverHeight,
+			HorizontalAlignment horizontalAlignment,
+			VerticalAlignment verticalAlignment)
+		{
+			decimal oldWidthOverHeight = boundingBox.Width / boundingBox.Height;
+			if( widthOverHeight == oldWidthOverHeight )
+			{
+				return boundingBox;
+			}
+
+			BoundingBox newBoundingBox;
+
+			if( widthOverHeight > oldWidthOverHeight )
+			{
+				//the target aspect ratio is wider than the current, so we need to contract vertically
+				var heightContractionAmount = widthOverHeight / oldWidthOverHeight;
+				newBoundingBox = BoundingBox.Create( boundingBox.Width, boundingBox.Height / heightContractionAmount, boundingBox.Center() );
+			}
+			else// widthOverHeight < oldWidthOverHeight
+			{
+				// the target aspect ratio is narrower than the current, So we need to contract the diagram horizontally
+				var widthContractionAmount = oldWidthOverHeight / widthOverHeight;
+				newBoundingBox = BoundingBox.Create( boundingBox.Width / widthContractionAmount, boundingBox.Height, boundingBox.Center() );
+			}
+
+			return newBoundingBox.Offset( LayoutUtilities.ComputeAlignment( newBoundingBox, boundingBox, verticalAlignment, horizontalAlignment ) );
+		}
+
 		/// <summary>
 		/// Scale the diagram to the dimensions of another.
 		/// </summary>
@@ -73,6 +103,18 @@ namespace FluentDiagrams
 		{
 			var background = Shapes.Square().ScaleTo( mask ).OffsetTo( mask ).Pipe( rectBgStyle );
 			return background.Then( mask );
+		}
+
+		public static IDiagram CropToAspectRatio(
+			this IDiagram diagram,
+			decimal aspectRatio,
+			HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment verticalAlignment = VerticalAlignment.Center
+			)
+		{
+			var newBounds = ScaleDownToAspectRatio( diagram.Bounds, aspectRatio, horizontalAlignment, verticalAlignment );
+
+			return Crop( diagram, newBounds );
 		}
 
 		public static IDiagram CropToSizeOf(
