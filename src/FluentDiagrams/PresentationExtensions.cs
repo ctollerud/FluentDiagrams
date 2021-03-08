@@ -55,7 +55,7 @@ namespace FluentDiagrams
 			BoundingBox boundingBox,
 			decimal widthOverHeight,
 			HorizontalAlignment horizontalAlignment,
-			VerticalAlignment verticalAlignment)
+			VerticalAlignment verticalAlignment )
 		{
 			decimal oldWidthOverHeight = boundingBox.Width / boundingBox.Height;
 			if( widthOverHeight == oldWidthOverHeight )

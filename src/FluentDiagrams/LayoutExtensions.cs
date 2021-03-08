@@ -1,6 +1,8 @@
 ﻿using FluentDiagrams.Internal;
 using FluentDiagrams.Internal.Transformations;
 using FluentDiagrams.Primitives;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FluentDiagrams
 {
@@ -161,6 +163,19 @@ namespace FluentDiagrams
 
 			return bottomDiagram.Offset( vector.Dx, vector.Dy );
 		}
+
+		public static IDiagram FromLeftToRight( this IEnumerable<IDiagram> input, VerticalAlignment? alignment = null ) =>
+			input.Aggregate( ( accumulator, next ) => next.ToTheRightOf( accumulator, alignment ) );
+
+		public static IDiagram FromRightToLeft( this IEnumerable<IDiagram> input, VerticalAlignment? alignment = null ) =>
+			input.Aggregate( ( accumulator, next ) => next.ToTheLeftOf( accumulator, alignment ) );
+
+		public static IDiagram FromTopToBottom( this IEnumerable<IDiagram> input, HorizontalAlignment? alignment = null ) =>
+			input.Aggregate( ( accumulator, next ) => next.ToTheBottomOf( accumulator, alignment ) );
+
+		public static IDiagram FromBottomToTop( this IEnumerable<IDiagram> input, HorizontalAlignment? alignment = null ) =>
+			input.Aggregate( ( accumulator, next ) => next.ToTheTopOf( accumulator, alignment ) );
+
 
 		/// <summary>
 		/// Just a temporary placeholder.  In the future, this will call into a method 

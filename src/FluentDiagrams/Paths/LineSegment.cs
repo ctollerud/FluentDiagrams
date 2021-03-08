@@ -19,6 +19,9 @@ namespace FluentDiagrams.Paths
 		public static LineSegment Create( Coordinate coord1, Vector vector ) =>
 			new LineSegment( coord1, coord1.Translate( vector ) );
 
+		public static LineSegment Create( Coordinate coord1, Coordinate coord2 ) =>
+			new LineSegment( coord1, coord2 );
+
 		public LineSegment RotateAbout( Coordinate rotationOrigin, Angle angle ) =>
 			new LineSegment( Coord1.RotateAbout( rotationOrigin, angle ), Coord2.RotateAbout( rotationOrigin, angle ) );
 
