@@ -7,8 +7,8 @@ namespace FluentDiagrams.Paths
 {
 	public interface IPathInstruction
 	{
-		IEnumerable<Coordinate> GetBoundingCoordinates();
-
+		Coordinate EndPosition { get; }
+		BoundingBox GetBoundingBox( Coordinate startPosition );
 		IPathInstruction RotateAbout( Coordinate rotationOrigin, Angle angle );
 	}
 }

@@ -1,4 +1,5 @@
-﻿using FluentDiagrams.Primitives;
+﻿using FluentDiagrams.Internal;
+using FluentDiagrams.Primitives;
 using System.Collections.Generic;
 
 namespace FluentDiagrams.Paths
@@ -16,15 +17,13 @@ namespace FluentDiagrams.Paths
 			ControlPoint2 = controlPoint2;
 		}
 
-		public IEnumerable<Coordinate> GetBoundingCoordinates()
-		{
-			yield return EndPosition;
-		}
-
 		public IPathInstruction RotateAbout( Coordinate rotationOrigin, Angle angle ) =>
 			new CubicPathInstruction(
 				EndPosition.RotateAbout( rotationOrigin, angle ),
 				ControlPoint1.RotateAbout( rotationOrigin, angle ),
 				ControlPoint2.RotateAbout( rotationOrigin, angle ) );
+
+		public BoundingBox GetBoundingBox( Coordinate startPosition ) =>
+			EnvelopeCalculation.GetCubicBezierBounds( startPosition, ControlPoint1, ControlPoint2, EndPosition );
 	}
 }

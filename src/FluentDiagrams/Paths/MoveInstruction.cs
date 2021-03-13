@@ -9,17 +9,17 @@ namespace FluentDiagrams.Paths
 	{
 		public Coordinate MoveTo { get; }
 
+		public Coordinate EndPosition => MoveTo;
+
 		public MoveInstruction( Coordinate moveTo )
 		{
 			MoveTo = moveTo;
 		}
 
-		public IEnumerable<Coordinate> GetBoundingCoordinates()
-		{
-			yield return MoveTo;
-		}
-
 		public IPathInstruction RotateAbout( Coordinate rotationOrigin, Angle angle ) =>
 			new MoveInstruction( MoveTo.RotateAbout( rotationOrigin, angle ) );
+
+		public BoundingBox GetBoundingBox( Coordinate startPosition ) =>
+			BoundingBox.Compose( startPosition, EndPosition );
 	}
 }

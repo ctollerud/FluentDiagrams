@@ -9,8 +9,7 @@ namespace FluentDiagrams.Internal
 {
 	public enum StrokeStyle
 	{
-		RoundedNoMargin,
-		RoundedMargin,
+		Rounded,
 		Rectangle
 
 	}

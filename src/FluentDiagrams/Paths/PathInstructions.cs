@@ -33,26 +33,16 @@ namespace FluentDiagrams.Paths
 			return new PathInstructions( startLocation, moveInstructions.ToArray() );
 		}
 
+		private IEnumerable<(Coordinate StartPosition, IPathInstruction Instruction)> GetInstructionsWithStart()
+		{
+			var startPositions = Instructions.Select( x => x.EndPosition ).StartWith( StartLocation );
+			return startPositions.Zip( Instructions );
+		}
+
 		internal BoundingBox GetBoundingBox() =>
-			Instructions.SelectMany( x => x.GetBoundingCoordinates() )
-			.StartWith( StartLocation )
-			.Pipe( BoundingBox.Compose )
-			.Pipe( x =>
-			{
-
-				var width = x.Width;
-				var height = x.Height;
-				if( x.Width == 0 )
-				{
-					width = 1;
-				}
-				if( x.Height == 0 )
-				{
-					height = 1;
-				}
-
-				return BoundingBox.Create( width, height, x.Center() );
-			} );
+			GetInstructionsWithStart()
+			.Select( x => x.Instruction.GetBoundingBox( x.StartPosition ) )
+			.Pipe( BoundingBox.Compose );
 
 		public static PathInstructions Segments( params Coordinate[] coordinates ) =>
 			Segments( coordinates.AsEnumerable() );

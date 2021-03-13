@@ -111,5 +111,9 @@ namespace FluentDiagrams.Internal
 		public static IEnumerable<Angle> InterpolateAngles( int count ) =>
 			from rotationAmount in LeftInterpolate( 0M, 1M, count )
 			select Angle.FromRotations( rotationAmount );
+
+		public static IEnumerable<Coordinate> InterpolateCoordinates( Coordinate start, Coordinate end, int count ) =>
+			Interpolate( start.X, end.X, count )
+			.Zip( Interpolate( start.Y, end.Y, count ), Coordinate.Cartesian );
 	}
 }

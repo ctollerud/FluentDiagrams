@@ -28,7 +28,7 @@ namespace FluentDiagrams.Svg
 		{
 			return
 				from inputDiagram in Fallible.Success<string, IDiagram>( diagram )
-				let boundingBox = inputDiagram.Bounds
+				let boundingBox = EnsureNonZeroDimensions( inputDiagram.Bounds )
 				let converter = new CoordinatesConverter( boundingBox, internalToSvgScaling )
 				let drawState = new SvgDrawState( converter )
 				let renderingResult = RenderSvg( diagram ).Func( drawState )
@@ -41,6 +41,23 @@ namespace FluentDiagrams.Svg
 						new XAttribute( "stroke-width", "0" ), // no stroke width.  Those that need it will set it explicitly.
 						new XAttribute( "viewbox", $"0 0 {converter.SvgWidth} {converter.SvgHeight}" ),
 						svgElements );
+		}
+
+		private static BoundingBox EnsureNonZeroDimensions( BoundingBox input )
+		{
+
+			var width = input.Width;
+			var height = input.Height;
+			if( input.Width == 0 )
+			{
+				width = 1;
+			}
+			if( input.Height == 0 )
+			{
+				height = 1;
+			}
+
+			return BoundingBox.Create( width, height, input.Center() );
 		}
 
 		internal static State<SvgDrawState, XElementBuilder> RenderSvg( IDiagram diagram )

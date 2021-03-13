@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using LinqGarden.Functions;
 
 namespace FluentDiagrams
 {
@@ -39,5 +40,8 @@ namespace FluentDiagrams
 		{
 			return new WhitelistMask( mask, maskee );
 		}
+
+		public static IDiagram AsMaskOver( this IDiagram mask, Func<IDiagram, IDiagram> backgroundModifier ) =>
+			mask.AsMaskOver( Shapes.Square().ScaleTo( mask ).OffsetTo( mask ).Pipe( backgroundModifier ) );
 	}
 }

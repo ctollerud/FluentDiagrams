@@ -106,6 +106,9 @@ namespace FluentDiagrams
 
 		}
 
+		public static BoundingBox Compose( params Coordinate[] coordinates ) =>
+			Compose( coordinates.AsEnumerable() );
+
 		public Coordinate Center() =>
 			new Coordinate( ( XMax + XMin ) / 2, ( YMax + YMin ) / 2 );
 
