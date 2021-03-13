@@ -34,7 +34,25 @@ namespace FluentDiagrams.Paths
 		}
 
 		internal BoundingBox GetBoundingBox() =>
-			Instructions.SelectMany( x => x.GetBoundingCoordinates() ).Pipe( BoundingBox.Compose );
+			Instructions.SelectMany( x => x.GetBoundingCoordinates() )
+			.StartWith( StartLocation )
+			.Pipe( BoundingBox.Compose )
+			.Pipe( x =>
+			{
+
+				var width = x.Width;
+				var height = x.Height;
+				if( x.Width == 0 )
+				{
+					width = 1;
+				}
+				if( x.Height == 0 )
+				{
+					height = 1;
+				}
+
+				return BoundingBox.Create( width, height, x.Center() );
+			} );
 
 		public static PathInstructions Segments( params Coordinate[] coordinates ) =>
 			Segments( coordinates.AsEnumerable() );

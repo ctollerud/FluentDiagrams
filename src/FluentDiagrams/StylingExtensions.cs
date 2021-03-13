@@ -1,4 +1,6 @@
-﻿using FluentDiagrams.Internal;
+﻿using FluentDiagrams.Gradients;
+using FluentDiagrams.Internal;
+using FluentDiagrams.Primitives;
 using FluentDiagrams.StyleProperties;
 using FluentDiagrams.Styling;
 using System.Drawing;
@@ -23,5 +25,15 @@ namespace FluentDiagrams
 
 		public static IDiagram WithStrokeColor( this IDiagram diagram, Color strokeColor ) =>
 			new StyleDecorator( diagram, new StrokeColorProperty( strokeColor ) );
+
+		public static IDiagram WithLinearGradient( this IDiagram diagram, Color start, Color end ) =>
+			WithLinearGradient( diagram, start, end, Angle.Zero );
+
+		public static IDiagram WithLinearGradient( this IDiagram diagram, Color start, Color end, Angle angle ) =>
+			new StyleDecorator( diagram, new GradientFillProperty( new LinearGradient( start, end, angle ) ) );
+
+		public static IDiagram WithRadialGradient( this IDiagram diagram, Color centerColor, Color edgeColor ) =>
+			new StyleDecorator( diagram, new GradientFillProperty( new RadialGradient( centerColor, edgeColor ) ) );
+
 	}
 }

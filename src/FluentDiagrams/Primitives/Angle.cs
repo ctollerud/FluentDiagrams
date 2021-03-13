@@ -31,6 +31,9 @@ namespace FluentDiagrams.Primitives
 		public Angle Plus( Angle angle ) =>
 			Angle.FromRotations( Rotations + angle.Rotations );
 
+		public Angle PlusRotations( decimal rotations ) =>
+			Plus( Angle.FromRotations( rotations ) );
+
 		public Angle Reverse() =>
 			new Angle( rotations: 1M - Rotations );
 

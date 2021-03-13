@@ -1,7 +1,9 @@
-﻿using FluentDiagrams.Primitives;
+﻿using FluentDiagrams.Internal;
+using FluentDiagrams.Primitives;
 using LinqGarden;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace FluentDiagrams
@@ -17,6 +19,19 @@ namespace FluentDiagrams
 
 		public static Random<Angle> RandomAngle() =>
 			MakeRandom.NextDouble().Select( Convert.ToDecimal ).Select( Angle.FromRotations );
+
+		private static readonly Random<int> s_RandomArgbComponent =
+			MakeRandom.Next( 0, 256 );
+
+		public static Random<Color> RandomRgbColor() =>
+			from r in s_RandomArgbComponent
+			from g in s_RandomArgbComponent
+			from b in s_RandomArgbComponent
+			select Color.FromArgb( r, g, b );
+
+		public static Random<Color> RandomRgbColor( Color color1, Color color2 ) =>
+			from blendAmount in RandomUtilities.RandomDecimal( 0, 1 )
+			select Colors.ColorExtensions.Blend( color1, color2, blendAmount );
 
 		public static Random<T> OneOf<T>( params T[] items )
 		{
