@@ -8,7 +8,7 @@ using FluentDiagrams.Internal.Shapes;
 
 namespace FluentDiagrams.Internal.Shapes
 {
-	public class RectangleDiagram : IDiagram, IRotatable
+	public class RectangleDiagram : IDiagram, IRotatable, IScalable, ITranslatable
 	{
 		public RectangleDiagram( decimal width, decimal height, Coordinate origin )
 		{
@@ -29,6 +29,12 @@ namespace FluentDiagrams.Internal.Shapes
 		public decimal Height => Bounds.Height;
 
 		public BoundingBox Bounds { get; }
+
+		public IDiagram PerformScaling( decimal x, decimal y ) =>
+			new RectangleDiagram( Width * x, Height * y, Bounds.Center() );
+
+		IDiagram ITranslatable.PerformTranslate( decimal x, decimal y ) =>
+			new RectangleDiagram( Width, Height, Bounds.Center().Translate( x, y ) );
 
 		IDiagram IRotatable.PerformRotate( Angle angle )
 		{

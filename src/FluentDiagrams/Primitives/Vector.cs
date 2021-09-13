@@ -40,13 +40,13 @@ namespace FluentDiagrams.Primitives
 		public static Vector Create( decimal dx, decimal dy ) =>
 			new Vector( dx, dy );
 
-		public Vector Add( Vector b ) => Vector.Create( Dx + b.Dx, Dy + b.Dy );
+		public Vector Plus( Vector b ) => Vector.Create( Dx + b.Dx, Dy + b.Dy );
 	}
 
 	public static class VectorExt
 	{
 		public static Vector Sum( this IEnumerable<Vector> vectors ) =>
-			vectors.StartWith( Vector.Zero ).Aggregate( ( a, b ) => a.Add( b ) );
+			vectors.StartWith( Vector.Zero ).Aggregate( ( a, b ) => a.Plus( b ) );
 
 		public static Vector Scale( this Vector input, decimal scaleMagnitude ) =>
 			Vector.Create( input.Angle, scaleMagnitude * input.Magnitude );

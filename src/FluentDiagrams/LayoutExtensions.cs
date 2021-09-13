@@ -92,7 +92,7 @@ namespace FluentDiagrams
 			var rightDiagramLeftEdge = rightDiagram.Bounds.XMin;
 
 			var vector = new Vector( rightDiagramLeftEdge - leftDiagramRightEdge, 0 )
-				.Add( LayoutUtilities.ComputeAlignment( leftDiagram, rightDiagram, alignment, null ) );
+				.Plus( LayoutUtilities.ComputeAlignment( leftDiagram, rightDiagram, alignment, null ) );
 
 			return leftDiagram.Offset( vector.Dx, vector.Dy );
 		}
@@ -111,7 +111,7 @@ namespace FluentDiagrams
 			var leftDiagramRightEdge = leftDiagram.Bounds.XMax;
 
 			var vector = new Vector( leftDiagramRightEdge - rightDiagramLeftEdge, 0 )
-				.Add( LayoutUtilities.ComputeAlignment( rightDiagram, leftDiagram, alignment, null ) );
+				.Plus( LayoutUtilities.ComputeAlignment( rightDiagram, leftDiagram, alignment, null ) );
 
 			return rightDiagram.Offset( vector.Dx, vector.Dy );
 		}
@@ -131,7 +131,7 @@ namespace FluentDiagrams
 			var bottomDiagramTopEdge = bottomDiagram.Bounds.YMax;
 
 			var vector = new Vector( 0, bottomDiagramTopEdge - topDiagramBottomEdge )
-				.Add(
+				.Plus(
 					LayoutUtilities.ComputeAlignment(
 						topDiagram,
 						bottomDiagram,
@@ -154,7 +154,7 @@ namespace FluentDiagrams
 			var topDiagramBottomEdge = topDiagram.Bounds.YMin;
 
 			var vector = new Vector( 0, topDiagramBottomEdge - bottomDiagramTopEdge )
-				.Add(
+				.Plus(
 					LayoutUtilities.ComputeAlignment(
 						bottomDiagram,
 						topDiagram,

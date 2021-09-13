@@ -136,10 +136,22 @@ namespace FluentDiagrams.Colors
 				InterpolateHslComponent( firstHsl.Luminosity, secondHsl.Luminosity, count ),
 				InterpolateArgbComponent( firstColor.A, secondColor.A, count ),
 				( h, s, l, a ) => new HslColor( h, s, l ).ToRgb( a ) );
-
-
-
 		}
 
+		public static Color WithHue( this Color inputColor, decimal newHue ) =>
+			inputColor.ModifyHsl( x => x.WithHue( Convert.ToDouble( newHue ) ) );
+
+		public static Color WithSaturation( this Color inputColor, decimal newSaturation ) =>
+			inputColor.ModifyHsl( x => x.WithSaturation( Convert.ToDouble( newSaturation ) ) );
+
+		public static Color WithLuminosity( this Color inputColor, decimal newLuminosity ) =>
+			inputColor.ModifyHsl( x => x.WithLuminosity( Convert.ToDouble( newLuminosity ) ) );
+
+		private static Color ModifyHsl( this Color inputColor, Func<HslColor, HslColor> modification )
+		{
+			var hsl = HslColor.FromRgb( inputColor );
+			var modifiedHsl = modification( hsl );
+			return modifiedHsl.ToRgb();
+		}
 	}
 }

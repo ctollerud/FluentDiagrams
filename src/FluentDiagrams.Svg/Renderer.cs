@@ -24,7 +24,7 @@ namespace FluentDiagrams.Svg
 		/// <returns></returns>
 		public static Fallible<string, XElement> RenderSvgElement(
 			IDiagram diagram,
-			int internalToSvgScaling = 10000 )
+			int internalToSvgScaling = 1000 )
 		{
 			return
 				from inputDiagram in Fallible.Success<string, IDiagram>( diagram )
@@ -97,7 +97,7 @@ namespace FluentDiagrams.Svg
 				XElementBuilder.WithName( "svg" )
 				.Add(
 
-					new XAttribute( "stroke-width", 0 ),
+					//new XAttribute( "stroke-width", 0 ),
 					new XAttribute( "x", topLeft.X ),
 					new XAttribute( "y", topLeft.Y ),
 					new XAttribute( "width", width ),

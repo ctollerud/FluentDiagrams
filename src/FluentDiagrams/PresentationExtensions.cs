@@ -99,11 +99,14 @@ namespace FluentDiagrams
 			}
 		}
 
-		public static IDiagram WithBackground( this IDiagram mask, Func<IDiagram, IDiagram> rectBgStyle )
+		public static IDiagram WithBackground( this IDiagram foreground, Func<IDiagram, IDiagram> rectBgStyle )
 		{
-			var background = Shapes.Square().ScaleTo( mask ).OffsetTo( mask ).Pipe( rectBgStyle );
-			return background.Then( mask );
+			var background = Shapes.Square().ScaleTo( foreground ).OffsetTo( foreground ).Pipe( rectBgStyle );
+			return background.Then( foreground );
 		}
+
+		public static IDiagram WithBackground( this IDiagram mask, Color backgroundColor ) =>
+			mask.WithBackground( x => x.WithFill( backgroundColor ) );
 
 		public static IDiagram CropToAspectRatio(
 			this IDiagram diagram,

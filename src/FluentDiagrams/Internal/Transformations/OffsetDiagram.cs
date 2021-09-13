@@ -21,7 +21,7 @@ namespace FluentDiagrams.Internal.Transformations
 			new OffsetDiagram( InnerDiagram.Rotate( angle ), Vector );
 
 		IDiagram ITranslatable.PerformTranslate( decimal x, decimal y ) =>
-			new OffsetDiagram( InnerDiagram, new Vector( x, y ).Add( Vector ) );
+			new OffsetDiagram( InnerDiagram, new Vector( x, y ).Plus( Vector ) );
 
 		IDiagram IScalable.PerformScaling( decimal x, decimal y ) =>
 			new OffsetDiagram( InnerDiagram.Scale( x, y ), Vector );

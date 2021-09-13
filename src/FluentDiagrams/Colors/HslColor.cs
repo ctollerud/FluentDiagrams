@@ -27,6 +27,15 @@ namespace FluentDiagrams.Colors
 		/// </summary>
 		//const double ComponentScale = 240.0;
 
+		public HslColor WithHue( double newHue ) =>
+			new HslColor( newHue, Saturation, Luminosity );
+
+		public HslColor WithSaturation( double newSaturation ) =>
+			new HslColor( Hue, newSaturation, Luminosity );
+
+		public HslColor WithLuminosity( double newLuminosity ) =>
+			new HslColor( Hue, Saturation, newLuminosity );
+
 		internal HslColor( double hue, double saturation, double luminosity )
 		{
 			Hue = hue;

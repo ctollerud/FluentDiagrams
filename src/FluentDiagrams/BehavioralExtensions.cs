@@ -28,7 +28,7 @@ namespace FluentDiagrams
 		}
 
 		/// <summary>
-		/// Uses the diagram as a white-listing mask over another item.
+		/// Uses the diagram as a mask over another item.
 		/// the darker a given mask pixel is, the more transparent the masked diagram's pixels are.
 		/// 
 		/// This diagram uses the mask's envelope.
@@ -40,6 +40,7 @@ namespace FluentDiagrams
 		{
 			return new WhitelistMask( mask, maskee );
 		}
+
 
 		public static IDiagram AsMaskOver( this IDiagram mask, Func<IDiagram, IDiagram> backgroundModifier ) =>
 			mask.AsMaskOver( Shapes.Square().ScaleTo( mask ).OffsetTo( mask ).Pipe( backgroundModifier ) );
