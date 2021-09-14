@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LinqGarden.Collections;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -51,12 +52,13 @@ namespace FluentDiagrams.Svg.Internal
 			Func<string, string> modifyExistingValue
 			)
 		{
-			if( Attributes.TryGetValue( attributeName.ToString(), out XAttribute value ) )
-			{
-				return this.Add( new XAttribute( attributeName, modifyExistingValue( value.Value ) ) );
-			}
+			string newAttributeValue =
+				Attributes.TryGetValue( attributeName.ToString() )
+				.To<string>(
+					attribute => modifyExistingValue( attribute.Value ),
+					() => genNewValue() );
 
-			return this.Add( new XAttribute( attributeName, genNewValue() ) );
+			return this.Add( new XAttribute( attributeName, newAttributeValue ) );
 		}
 
 

@@ -31,7 +31,7 @@ namespace FluentDiagrams.Svg
 				let boundingBox = EnsureNonZeroDimensions( inputDiagram.Bounds )
 				let converter = new CoordinatesConverter( boundingBox, internalToSvgScaling )
 				let drawState = new SvgDrawState( converter )
-				let renderingResult = RenderSvg( diagram ).Func( drawState )
+				let renderingResult = RenderSvg( diagram ).Run( drawState )
 				let mainElement = renderingResult.Value
 				let finalDrawState = renderingResult.State
 				let svgElements = finalDrawState.BuildDeclarations()

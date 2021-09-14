@@ -16,13 +16,15 @@ namespace FluentDiagrams.BuildUtils
 			Name = element.Name.ToString();
 			InnerElements = element.Elements().Select( x => new XmlComparisonStructure( x ) ).ToList();
 			InnerText =
-				element.ToMaybe()
+				element.NoneIfNull()
 				.Where( element => element.Elements().Any() == false )
 				.Select( element => element.Value );
 
-			Attributes = element.Attributes()
-				.OrderBy( x => x.Name.ToString() )
-				.Select( x => (x.Name.ToString(), x.Value) )
+			Attributes =
+				( from attribute in element.Attributes()
+				  let name = attribute.Name.ToString()
+				  orderby name
+				  select (name, attribute.Value) )
 				.ToList();
 		}
 
@@ -38,8 +40,9 @@ namespace FluentDiagrams.BuildUtils
 	public static class XmlComparison
 	{
 		public static Fallible<string, Unit> CompareElements( XElement expected, XElement actual ) =>
-			FallibleFunction.Build( () => CompareElementsUnsafely( expected, actual ) )
-			.Catch<AssertionFailedException>().SelectFailure( exc => exc.Message )
+			Function.From( () => CompareElementsUnsafely( expected, actual ) )
+			.CatchAsFailure<AssertionFailedException>()
+			.SelectFailure( exc => exc.Message )
 			.Invoke();
 
 		/// <summary>

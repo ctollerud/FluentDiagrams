@@ -77,7 +77,7 @@ namespace FluentDiagrams.Svg
 		internal static XElementBuilder BuildFilter( IFilterComponent component, CoordinatesConverter converter )
 		{
 			var firstAttempt = BuildFilterComponent( component, converter )
-					.Func( FilterChainState.Initial() );
+					.Run( FilterChainState.Initial() );
 			var firstAttemptItems = firstAttempt.Value.ToList();
 
 			List<XElement> filterChainList;
@@ -90,7 +90,7 @@ namespace FluentDiagrams.Svg
 			{
 				var filterComponent = Filters.Noop;
 				filterChainList = BuildFilterComponent( filterComponent, converter )
-					.Func( firstAttempt.State ).Value.ToList();
+					.Run( firstAttempt.State ).Value.ToList();
 			}
 			return
 			XElementBuilder.WithName( "filter" )

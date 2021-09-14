@@ -16,7 +16,7 @@ namespace FluentDiagrams.BuildUtils
 	public static class GalleryGeneration
 	{
 		public static Fallible<string, Unit> GenerateGallery( string galleryOutputDir, Maybe<string> regressionDir ) =>
-		from outcome in FunctionExtensions.Function( () =>
+		from outcome in Function.From( () =>
 		{
 			Out.WriteLine( $"Generating gallery to output dir '{galleryOutputDir}'" );
 
@@ -34,12 +34,13 @@ namespace FluentDiagrams.BuildUtils
 			var errorMessages =
 				from result in results
 				from issue in result.Issue
-				from errorLine in new[]
-				{
-							$"item '{result.Item.Title}' failed:",
-							issue,
-							string.Empty
-				}
+				from errorLine in
+					new[]
+					{
+						$"item '{result.Item.Title}' failed:",
+						issue,
+						string.Empty
+					}
 				select errorLine;
 
 			return
@@ -58,12 +59,15 @@ namespace FluentDiagrams.BuildUtils
 					Svg.Renderer.RenderSvgElement( item.Diagram.Compile().Invoke() )
 					.IfSuccessDo( svgElement => WriteOutToGallery( svgElement, item, outputDirPath ) )
 				from _regressionTest in
-					regressionDirPath.To(
-						x => CheckForRegressions( svgElement, System.IO.Path.Combine( x, $"{item.Title}.svg" ) ),
+					regressionDirPath.To<Fallible<string, Unit>>(
+						dir =>
+							CheckForRegressions(
+								svgElement,
+								Path.Combine( dir, $"{item.Title}.svg" ) ),
 						() => Fallible.Success<string, Unit>( Unit.Instance ) )
 				select _regressionTest
 			)
-			.FailureValue
+			.GetFailure()
 			.Pipe( maybeFailure => new RenderingResult( item, maybeFailure ) );
 
 		private static void WriteOutToGallery( XElement svgElement, GalleryItem item, string outputDirPath )
@@ -81,7 +85,7 @@ namespace FluentDiagrams.BuildUtils
 					(Filename: $"{item.Title}.svg", Text: svg)
 				}
 			  let fullDestinationPath = Path.Combine( outputDirPath, pair.Filename )
-			  select FunctionExtensions.Function( () =>
+			  select Function.From( () =>
 			  {
 				  Console.Out.WriteLine( $"writing file '{fullDestinationPath}'..." );
 				  File.WriteAllText( fullDestinationPath, pair.Text );
@@ -93,9 +97,9 @@ namespace FluentDiagrams.BuildUtils
 
 		private static Fallible<string, Unit> CheckForRegressions( XElement svgElement, string regressionFilePath ) =>
 			from expectedElement in
-				FallibleFunction.Build( () => XElement.Load( regressionFilePath ) )
-				.Catch<XmlException>()
-					.SelectFailure( x =>
+				Function.From( () => XElement.Load( regressionFilePath ) )
+				.CatchAsFailure(
+					( XmlException x ) =>
 						new[]
 						{
 							$"XML Parse Failed:",
@@ -103,7 +107,7 @@ namespace FluentDiagrams.BuildUtils
 							$"Line:{x.LineNumber}, Position:{x.LinePosition}"
 						}
 						.JoinStrings( Environment.NewLine ) )
-				.Catch<FileNotFoundException>( x => x.Message )
+				.CatchAsFailure( ( FileNotFoundException x ) => x.Message )
 				.Invoke()
 			from _performComparison in XmlComparison.CompareElements( svgElement, expectedElement )
 			select _performComparison;
@@ -117,7 +121,7 @@ namespace FluentDiagrams.BuildUtils
 				new XElement( "body",
 					new XElement( "div",
 						new XElement( "h2", description ),
-						new XElement( "h3", expression.ToString().Substring( 5 ) )
+						new XElement( "h3", expression.ToString()[5..] )
 					),
 					new XElement( "div",
 						svgElement

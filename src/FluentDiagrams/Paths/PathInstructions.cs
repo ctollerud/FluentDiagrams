@@ -36,7 +36,7 @@ namespace FluentDiagrams.Paths
 		private IEnumerable<(Coordinate StartPosition, IPathInstruction Instruction)> GetInstructionsWithStart()
 		{
 			var startPositions = Instructions.Select( x => x.EndPosition ).StartWith( StartLocation );
-			return startPositions.Zip( Instructions );
+			return startPositions.Zip( Instructions, ( x, y ) => (x, y) );
 		}
 
 		internal BoundingBox GetBoundingBox() =>

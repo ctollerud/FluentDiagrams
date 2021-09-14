@@ -39,7 +39,7 @@ namespace FluentDiagrams.Svg.Internal
 		{
 			if( m_Definitions.TryGetValue( defined, out var values ) )
 			{
-				return State<SvgDrawState, string>.Return( values.Id );
+				return State.Return<SvgDrawState, string>( values.Id );
 			}
 			else
 			{

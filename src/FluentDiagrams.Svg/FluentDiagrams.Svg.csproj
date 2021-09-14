@@ -2,7 +2,7 @@
 	<Import Project="../VersionInfo.props" />
 	
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 		<Authors>Corey Tollerud</Authors>
 		<Company />
 		<Description>An SVG Renderer for the FluentDiagrams library.</Description>
